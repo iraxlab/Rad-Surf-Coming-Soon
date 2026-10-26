@@ -28,7 +28,7 @@
 <meta name="twitter:image" content="https://theradsurf.com/wp-content/uploads/rad-surf-share.jpg">
 <link rel="icon" href="./assets/Rad Surf Logo Fav Main.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
-{"@type":"Organization","@id":"https://theradsurf.com/#org","name":"Rad Surf Company","alternateName":["Rad Surf","The Rad Surf"],"url":"https://theradsurf.com/","logo":"https://theradsurf.com/wp-content/uploads/radsurf-logo.jpg","slogan":"Ride the style. Stay rad.","description":"Florida surf brand making snapback patch hats, die-cut surfer stickers and ocean-inspired apparel.","areaServed":[{"@type":"State","name":"Florida"},{"@type":"Country","name":"United States"}],"address":{"@type":"PostalAddress","addressRegion":"FL","addressCountry":"US"},"sameAs":[]},
+{"@type":"Organization","@id":"https://theradsurf.com/#org","name":"Rad Surf Company","alternateName":["Rad Surf","The Rad Surf"],"url":"https://theradsurf.com/","logo":"https://theradsurf.com/wp-content/uploads/radsurf-logo.jpg","slogan":"Ride the style. Stay rad.","description":"Florida surf brand making snapback patch hats, die-cut surfer stickers and ocean-inspired apparel.","areaServed":[{"@type":"State","name":"Florida"},{"@type":"Country","name":"United States"}],"address":{"@type":"PostalAddress","addressRegion":"FL","addressCountry":"US"},"sameAs":["https://www.instagram.com/radsurfnoflo","https://www.facebook.com/profile.php?id=61553354830685"]},
 {"@type":"OnlineStore","@id":"https://theradsurf.com/#store","name":"Rad Surf Co.","url":"https://theradsurf.com/","parentOrganization":{"@id":"https://theradsurf.com/#org"},"address":{"@type":"PostalAddress","addressRegion":"FL","addressCountry":"US"},"areaServed":"US"},
 {"@type":"WebSite","@id":"https://theradsurf.com/#website","url":"https://theradsurf.com/","name":"Rad Surf Co.","publisher":{"@id":"https://theradsurf.com/#org"},"inLanguage":"en-US"},
 {"@type":"WebPage","@id":"https://theradsurf.com/#home","url":"https://theradsurf.com/","name":"Rad Surf Co. | Surf Hats, Stickers & Apparel from Florida","isPartOf":{"@id":"https://theradsurf.com/#website"},"about":{"@id":"https://theradsurf.com/#org"},
@@ -76,6 +76,13 @@ input,textarea,button{font-family:inherit}
 @media (max-width:900px) and (min-aspect-ratio:1/3) and (max-aspect-ratio:4/5){
   .hero-a{justify-content:flex-start!important;padding-top:max(132px,15vh)!important}
 }
+.bird-fly{position:absolute;left:-60px;animation-name:birdFly;animation-timing-function:linear;animation-iteration-count:infinite;will-change:transform}
+.bird-bob{animation:birdBob 3.4s ease-in-out infinite}
+.bird-wing{transform-origin:50% 60%;animation-name:birdFlap;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+@keyframes birdFly{0%{transform:translateX(0)}100%{transform:translateX(calc(100vw + 140px))}}
+@keyframes birdBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes birdFlap{0%{transform:scaleY(1)}100%{transform:scaleY(-.55)}}
+@media (prefers-reduced-motion:reduce){.bird-fly,.bird-bob,.bird-wing{animation:none}}
 @media (max-height:820px){
   .hero-a{padding-top:116px!important}
   .hero-lede{display:none}
@@ -107,6 +114,14 @@ input,textarea,button{font-family:inherit}
 <section id="top" ref="{{ heroWrap }}" data-screen-label="Hero" style="position:relative;height:270vh;background:#1E6D93">
   <div class="hero-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden;background:linear-gradient(180deg,#1E6D93 0%,#7DC7DB 38%,#ffe7b3 52%,#1E6D93 53%,#75A8BD 78%,#f1d49d 80%,#e2bc82 100%)">
     <canvas ref="{{ heroCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden">
+      <div class="bird-fly" style="top:14%;animation-duration:26s;animation-delay:0s"><div class="bird-bob" style="animation-delay:0.00s"><svg width="34" height="17" viewBox="0 0 40 20" style="display:block;opacity:0.85"><path class="bird-wing" style="animation-duration:0.55s" d="M2 6 Q11 0 20 11 Q29 0 38 6 Q29 4 20 15 Q11 4 2 6Z" fill="#0b2c40"></path></svg></div></div>
+      <div class="bird-fly" style="top:17%;animation-duration:26s;animation-delay:0.6s"><div class="bird-bob" style="animation-delay:0.37s"><svg width="24" height="12" viewBox="0 0 40 20" style="display:block;opacity:0.75"><path class="bird-wing" style="animation-duration:0.5s" d="M2 6 Q11 0 20 11 Q29 0 38 6 Q29 4 20 15 Q11 4 2 6Z" fill="#0b2c40"></path></svg></div></div>
+      <div class="bird-fly" style="top:11%;animation-duration:26s;animation-delay:1.1s"><div class="bird-bob" style="animation-delay:0.74s"><svg width="20" height="10" viewBox="0 0 40 20" style="display:block;opacity:0.7"><path class="bird-wing" style="animation-duration:0.48s" d="M2 6 Q11 0 20 11 Q29 0 38 6 Q29 4 20 15 Q11 4 2 6Z" fill="#0b2c40"></path></svg></div></div>
+      <div class="bird-fly" style="top:24%;animation-duration:38s;animation-delay:8s"><div class="bird-bob" style="animation-delay:1.11s"><svg width="16" height="8" viewBox="0 0 40 20" style="display:block;opacity:0.55"><path class="bird-wing" style="animation-duration:0.45s" d="M2 6 Q11 0 20 11 Q29 0 38 6 Q29 4 20 15 Q11 4 2 6Z" fill="#0b2c40"></path></svg></div></div>
+      <div class="bird-fly" style="top:26%;animation-duration:38s;animation-delay:8.7s"><div class="bird-bob" style="animation-delay:1.48s"><svg width="12" height="6" viewBox="0 0 40 20" style="display:block;opacity:0.5"><path class="bird-wing" style="animation-duration:0.42s" d="M2 6 Q11 0 20 11 Q29 0 38 6 Q29 4 20 15 Q11 4 2 6Z" fill="#0b2c40"></path></svg></div></div>
+      <div class="bird-fly" style="top:8%;animation-duration:32s;animation-delay:16s"><div class="bird-bob" style="animation-delay:1.85s"><svg width="28" height="14" viewBox="0 0 40 20" style="display:block;opacity:0.8"><path class="bird-wing" style="animation-duration:0.6s" d="M2 6 Q11 0 20 11 Q29 0 38 6 Q29 4 20 15 Q11 4 2 6Z" fill="#0b2c40"></path></svg></div></div>
+    </div>
     <div ref="{{ heroA }}" class="hero-a" style="position:absolute;left:0;right:0;top:0;bottom:96px;display:flex;flex-direction:column;justify-content:safe center;padding:max(128px,14vh) clamp(22px,6vw,104px) 0;color:#EEFAFB;text-shadow:0 2px 16px rgba(6,35,56,.58),0 1px 4px rgba(6,35,56,.42);will-change:transform,opacity">
       <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px">
         <span style="font-size:15px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:10px 18px;border:1.5px solid rgba(238,250,251,.85);border-radius:999px;text-shadow:none;background:rgba(14,68,98,.52);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#EEFAFB">Snapback Hats · Die-Cut Stickers</span>
@@ -993,7 +1008,7 @@ void main(){
     removeEventListener('pointerup', this.onGalleryUp);
     removeEventListener('hashchange', this.onHashChange);
     removeEventListener('click', this.onAnchorClick);
-    if (this.io) this.io.disconnect(); if (this.ac) this.ac.close();
+    if (this.io) this.io.disconnect(); if (this.ac) this.ac.close(); if (this.audio) this.audio.pause();
   }
   initReveal() {
     this.io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.style.opacity = '1'; en.target.style.transform = 'none'; this.io.unobserve(en.target); } }), { threshold: 0.12 });
@@ -1707,6 +1722,11 @@ void main(){
         if (b) { const k = this.C((p - 0.4) / 0.2); b.style.opacity = k; b.style.transform = 'translateY(' + ((1 - k) * 50) + 'px)'; }
         if (hn) hn.style.opacity = 1 - this.C(p / 0.12);
       }
+      if (this.audio) {
+        const au = this.audio, target = this.state.sound ? (r.bottom > 0 ? 0.8 : 0.35) : 0;
+        au.volume = Math.max(0, Math.min(1, au.volume + (target - au.volume) * 0.06));
+        if (!this.state.sound && au.volume < 0.01 && !au.paused) { au.volume = 0; au.pause(); }
+      }
       if (this.ac && this.surfGain) {
         const on = this.state.sound ? 1 : 0, ac = this.ac.currentTime;
         const vis = r.bottom > 0 ? 1 : 0.45;
@@ -1758,84 +1778,10 @@ void main(){
     if (sd) { const r = sd.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0 && heavy && half) this.drawSand(t); }
   }
   toggleSound() {
-    if (!this.ac) {
-      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-      const ac = new AC(), sr = ac.sampleRate, len = sr * 12;
-      const buf = ac.createBuffer(2, len, sr);
-      // Generate true stereo Paul Kellet pink noise (-3dB/octave natural acoustic spectrum) with seamless loop crossfade
-      for (let ch = 0; ch < 2; ch++) {
-        const dd = buf.getChannelData(ch);
-        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-        for (let i = 0; i < len; i++) {
-          const w = Math.random() * 2 - 1;
-          b0 = 0.99886 * b0 + w * 0.0555179;
-          b1 = 0.99332 * b1 + w * 0.0750759;
-          b2 = 0.96900 * b2 + w * 0.1538520;
-          b3 = 0.86650 * b3 + w * 0.3104856;
-          b4 = 0.55000 * b4 + w * 0.5329522;
-          b5 = -0.7616 * b5 - w * 0.0168980;
-          const pink = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11;
-          b6 = w * 0.115926;
-          dd[i] = pink;
-        }
-        // Smooth 0.5s crossfade at loop seam so there is never a loop click
-        const fade = Math.floor(sr * 0.5);
-        for (let i = 0; i < fade; i++) {
-          const a = i / fade;
-          dd[i] = dd[i] * a + dd[len - fade + i] * (1 - a);
-        }
-      }
-
-      const mkSrc = (offsetSec) => {
-        const s = ac.createBufferSource();
-        s.buffer = buf;
-        s.loop = true;
-        s.start(0, offsetSec);
-        return s;
-      };
-
-      // Master subtle warmth filter to remove any digital harshness
-      const masterLP = ac.createBiquadFilter();
-      masterLP.type = 'lowpass';
-      masterLP.frequency.value = 3400;
-      masterLP.connect(ac.destination);
-
-      // Layer 1: Deep Ocean Swell & Rolling Undertow
-      const src1 = mkSrc(0);
-      const swellFilter = ac.createBiquadFilter();
-      swellFilter.type = 'lowpass';
-      swellFilter.frequency.value = 160;
-      swellFilter.Q.value = 0.65;
-      const swellGain = ac.createGain();
-      swellGain.gain.value = 0;
-      src1.connect(swellFilter); swellFilter.connect(swellGain); swellGain.connect(masterLP);
-
-      // Layer 2: Breaking Wave Crest & Shoreline Wash
-      const src2 = mkSrc(4.1);
-      const surfFilter = ac.createBiquadFilter();
-      surfFilter.type = 'lowpass';
-      surfFilter.frequency.value = 480;
-      surfFilter.Q.value = 0.85;
-      const surfGain = ac.createGain();
-      surfGain.gain.value = 0;
-      src2.connect(surfFilter); surfFilter.connect(surfGain); surfGain.connect(masterLP);
-
-      // Layer 3: Delayed Shoreline Foam & Receding Sand Bubbles
-      const src3 = mkSrc(8.3);
-      const foamFilter = ac.createBiquadFilter();
-      foamFilter.type = 'bandpass';
-      foamFilter.frequency.value = 2100;
-      foamFilter.Q.value = 0.55;
-      const foamGain = ac.createGain();
-      foamGain.gain.value = 0;
-      src3.connect(foamFilter); foamFilter.connect(foamGain); foamGain.connect(masterLP);
-
-      this.ac = ac;
-      this.swellFilter = swellFilter; this.swellGain = swellGain;
-      this.surfFilter = surfFilter; this.surfGain = surfGain;
-      this.foamFilter = foamFilter; this.foamGain = foamGain;
-    }
-    const on = !this.state.sound; if (on) this.ac.resume(); this.setState({ sound: on });
+    if (!this.audio) { this.audio = new Audio('./assets/ocean-waves.mp3'); this.audio.loop = true; this.audio.volume = 0; this.audio.preload = 'auto'; }
+    const on = !this.state.sound;
+    if (on) this.audio.play().catch(e => console.warn('audio', e && e.message));
+    this.setState({ sound: on });
   }
   add(p, size) {
     const key = p.id + '|' + (size || '');
