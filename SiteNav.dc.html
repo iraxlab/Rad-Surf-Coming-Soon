@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+</helmet>
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:16px clamp(12px,3vw,36px);pointer-events:none;font-family:'Instrument Sans',system-ui,sans-serif">
+  <nav style="pointer-events:auto;width:100%;max-width:none;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 12px 12px 20px;border-radius:999px;background:{{ bg }};color:{{ fg }};backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);box-shadow:{{ shadow }};border:1px solid {{ border }};transition:background .45s,color .45s,box-shadow .45s,border-color .45s">
+    <a href="{{ homeHref }}" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:14px;color:inherit;text-decoration:none;white-space:nowrap;flex:0 0 auto;margin:-7px 0;transition:transform .25s" style-hover="transform:translateY(-2px)">
+      <span style="display:inline-flex;align-items:center;justify-content:center;height:68px;box-sizing:border-box;background:#ffffff;padding:13px 26px 11px 24px;border-radius:999px;box-shadow:0 8px 20px -10px rgba(8,47,73,.35);border:1px solid rgba(125,199,219,.4)">
+        <img src="./radsurf-logo.jpg" alt="Rad Surf" style="height:46px;width:auto;display:block">
+      </span>
+      
+    </a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:clamp(18px,2.2vw,40px);font-size:clamp(18px,1.3vw,21px);font-weight:700;letter-spacing:-0.005em;white-space:nowrap">
+        <sc-for list="{{ links }}" as="l" hint-placeholder-count="7">
+          <a href="{{ l.href }}" onClick="{{ l.go }}" style="color:inherit;text-decoration:none;padding:10px 2px;transition:opacity .2s" style-hover="opacity:.65;color:inherit">{{ l.label }}</a>
+        </sc-for>
+      </div>
+    </sc-if>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button onClick="{{ cart }}" style="display:flex;align-items:center;gap:12px;border:0;cursor:pointer;background:#7DC7DB;color:#082f49;font-weight:700;font-size:19px;padding:15px 24px;border-radius:999px;box-shadow:0 12px 26px -12px rgba(30,109,147,.6);transition:transform .25s,background .25s" style-hover="transform:scale(1.04);background:#EEFAFB">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>
+        <span>Bag</span>
+        <span style="min-width:26px;height:26px;border-radius:999px;background:#1E6D93;color:#EEFAFB;display:grid;place-items:center;font-size:14px">{{ n }}</span>
+      </button>
+      <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggle }}" aria-label="Menu" style="width:54px;height:54px;border-radius:999px;border:1.5px solid currentColor;background:transparent;color:inherit;cursor:pointer;display:grid;place-items:center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 8h18M3 16h18"></path></svg>
+        </button>
+      </sc-if>
+    </div>
+  </nav>
+</header>
+<div style="position:fixed;inset:0;z-index:55;background:#082f49;color:#fff8ec;display:flex;flex-direction:column;justify-content:space-between;padding:110px 28px 40px;font-family:'Instrument Sans',system-ui,sans-serif;opacity:{{ menuOpacity }};pointer-events:{{ menuEvents }};transition:opacity .4s">
+  <button onClick="{{ toggle }}" aria-label="Close menu" style="position:absolute;top:28px;right:28px;width:54px;height:54px;border-radius:999px;border:1.5px solid #fff8ec;background:transparent;color:#fff8ec;cursor:pointer;font-size:22px">✕</button>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{ links }}" as="l" hint-placeholder-count="7">
+      <a href="{{ l.href }}" onClick="{{ l.go }}" style="font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(34px,7.5vw,54px);letter-spacing:-0.02em;line-height:1.1;color:#EEFAFB;text-decoration:none">{{ l.label }}</a>
+    </sc-for>
+  </div>
+  <div style="font-family:'Instrument Sans',system-ui,sans-serif;font-weight:600;font-size:22px;color:#7DC7DB">Ride the style. Stay rad.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:120},&quot;base&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Rad Surf.dc.html&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;solid&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;story&quot;,&quot;shop&quot;,&quot;why&quot;,&quot;gallery&quot;,&quot;blog&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;count&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { narrow: false, open: false, stored: 0 };
+  componentDidMount() {
+    this.onR = () => { const n = innerWidth < 1200; if (n !== this.state.narrow) this.setState({ narrow: n, open: n && this.state.open }); };
+    this.onC = () => { try { const c = JSON.parse(localStorage.getItem('radsurf-cart') || '[]'); this.setState({ stored: c.reduce((a, i) => a + (i.qty || 0), 0) }); } catch (e) {} };
+    addEventListener('resize', this.onR); addEventListener('storage', this.onC); addEventListener('radsurf-cart', this.onC);
+    this.onR(); this.onC();
+  }
+  componentWillUnmount() { removeEventListener('resize', this.onR); removeEventListener('storage', this.onC); removeEventListener('radsurf-cart', this.onC); }
+  scrollToSection(e, id) {
+    if (this.state.open) this.setState({ open: false });
+    if (!id || (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0))) return;
+    const el = document.getElementById(id);
+    if (el) {
+      if (e) e.preventDefault();
+      try { history.pushState(null, '', '#' + id); } catch (err) {}
+      const calcTop = () => id === 'top' ? 0 : Math.max(0, el.getBoundingClientRect().top + window.scrollY - 84);
+      window.scrollTo({ top: calcTop(), behavior: 'smooth' });
+      clearTimeout(this.st);
+      this.st = setTimeout(() => {
+        const diff = Math.abs(window.scrollY - calcTop());
+        if (diff > 24) window.scrollTo({ top: calcTop(), behavior: 'smooth' });
+      }, 420);
+    }
+  }
+  renderVals() {
+    const p = this.props, base = p.base ?? 'Rad Surf.dc.html', solid = p.solid ?? true;
+    const links = [
+      ['Sticker Lab', base + '#stickers', 'stickers'],
+      ['Story', base + '#story', 'story'],
+      ['Shop', base + '#shop', 'shop'],
+      ['Why Rad', base + '#why', 'why'],
+      ['Gallery', base + '#gallery', 'gallery'],
+      ['Blog', 'Blog.dc.html', ''],
+      ['Contact', base + '#contact', 'contact']
+    ].map(([label, href, id]) => ({
+      label, href,
+      go: e => this.scrollToSection(e, id)
+    }));
+    return {
+      links,
+      homeHref: base || '#top',
+      goHome: e => this.scrollToSection(e, 'top'),
+      wide: !this.state.narrow, narrow: this.state.narrow,
+      bg: solid ? 'rgba(238,250,251,0.94)' : 'rgba(8,47,73,0.28)', fg: solid ? '#082f49' : '#EEFAFB',
+      border: solid ? 'rgba(30,109,147,0.16)' : 'rgba(238,250,251,0.32)',
+      shadow: solid ? '0 14px 40px -22px rgba(8,47,73,.55)' : 'none',
+      n: p.count ?? this.state.stored,
+      cart: () => { if (p.onCart) p.onCart(); else location.href = 'Rad Surf.dc.html#bag'; },
+      toggle: () => this.setState(s => ({ open: !s.open })), close: () => this.setState({ open: false }),
+      menuOpacity: this.state.open ? 1 : 0, menuEvents: this.state.open ? 'auto' : 'none'
+    };
+  }
+}
+</script>
+</body>
+</html>

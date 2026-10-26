@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Rad Surf Co. · Coming Soon</title>
+<meta name="description" content="Rad Surf Company, a Florida surf brand making snapback patch hats, die-cut surfer stickers and ocean-inspired apparel. New site coming soon.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<style>
+html,body{margin:0;height:100%;background:#06253b;-webkit-font-smoothing:antialiased}
+a{color:#EEFAFB;text-decoration:none}
+a:hover{color:#ffd38a}
+::selection{background:#68bdd4;color:#06253b}
+input,button{font-family:inherit}
+input::placeholder{color:rgba(6,37,59,.55)}
+@keyframes cs-rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes cs-letter{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-.06em) rotate(-2deg)}}
+.cs-in{opacity:0;animation:cs-rise 1.1s cubic-bezier(.2,.7,.2,1) forwards}
+.cs-l{display:inline-block;animation:cs-letter 3.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.cs-l{animation:none}.cs-in{animation:none;opacity:1}}
+@media (max-width:640px){.cs-wrap{padding-top:22px!important;justify-content:flex-start!important}.cs-hide-sm{display:none!important}}
+</style>
+</helmet>
+<div style="position:relative;min-height:100svh;overflow:hidden;color:#EEFAFB;font-family:'Instrument Sans',system-ui,sans-serif;background:linear-gradient(180deg,#1E6D93 0%,#7DC7DB 40%,#ffe2ad 55%,#1E6D93 56%,#0e4868 100%)">
+  <canvas ref="{{ canvas }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+
+  <div class="cs-wrap" style="position:relative;z-index:2;min-height:100svh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:28px clamp(20px,5vw,80px) 28px">
+    <header class="cs-in" style="display:flex;justify-content:space-between;align-items:center;gap:16px;animation-delay:.1s">
+      <span style="display:inline-flex;background:#ffffff;border-radius:18px;padding:8px 14px;box-shadow:0 16px 34px -18px rgba(6,37,59,.6)">
+        <img src="./radsurf-logo.jpg" alt="Rad Surf Co." style="height:48px;width:auto;display:block">
+      </span>
+      <span class="cs-hide-sm" style="font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;border:1.5px solid rgba(238,250,251,.8);border-radius:999px;background:rgba(6,37,59,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">North Florida · Surf Co.</span>
+    </header>
+
+    <main style="display:flex;flex-direction:column;gap:clamp(18px,2.4vh,30px);max-width:1100px;text-shadow:0 2px 30px rgba(6,37,59,.35)">
+      <span class="cs-in" style="align-self:flex-start;display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;animation-delay:.25s">
+        <span style="width:10px;height:10px;border-radius:50%;background:#ffd38a;box-shadow:0 0 0 5px rgba(255,211,138,.3),0 0 22px #ffd38a"></span>
+        Coming soon
+      </span>
+      <h1 class="cs-in" style="margin:0;font-family:'Anybody',sans-serif;font-weight:900;font-stretch:130%;font-size:clamp(56px,min(11vw,17vh),196px);line-height:.86;letter-spacing:-0.025em;animation-delay:.4s">
+        <span style="display:flex;flex-wrap:wrap;column-gap:.2em">
+          <span style="display:inline-flex;white-space:nowrap"><sc-for list="{{ w1 }}" as="l" hint-placeholder-count="5"><span class="cs-l" style="animation-delay:{{ l.d }}">{{ l.c }}</span></sc-for></span>
+          <span style="display:inline-flex;white-space:nowrap"><sc-for list="{{ w2 }}" as="l" hint-placeholder-count="2"><span class="cs-l" style="animation-delay:{{ l.d }}">{{ l.c }}</span></sc-for></span>
+        </span>
+        <span style="display:block;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-stretch:100%;font-size:.62em;letter-spacing:-0.01em;line-height:1;margin-top:.12em;color:#ffffff">is paddling out.</span>
+      </h1>
+      <p class="cs-in" style="margin:0;max-width:600px;font-size:clamp(19px,1.6vw,23px);line-height:1.5;font-weight:600;text-wrap:pretty;animation-delay:.6s">Our new home for snapback patch hats, die-cut surfer stickers and ocean-inspired apparel. Get on the list and be first in the water when we drop.</p>
+      <span class="cs-in" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(24px,2.2vw,32px);line-height:1;color:#ffffff;animation-delay:.7s">Created and run by surfers.</span>
+
+      <div class="cs-in" style="animation-delay:.9s;text-shadow:none;max-width:620px">
+        <sc-if value="{{ notJoined }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ join }}" style="display:flex;gap:8px;padding:8px;border-radius:999px;background:rgba(238,250,251,.95);box-shadow:0 24px 50px -24px rgba(6,37,59,.7);flex-wrap:wrap">
+            <input name="email" type="email" required="" placeholder="Your email" aria-label="Email" style="flex:1 1 200px;min-width:0;border:0;outline:none;background:transparent;font-size:18px;font-weight:600;color:#06253b;padding:14px 18px">
+            <button type="submit" style="border:0;cursor:pointer;background:#0e4868;color:#EEFAFB;font-weight:700;font-size:16px;letter-spacing:.06em;padding:16px 26px;border-radius:999px;transition:background .25s,transform .25s" style-hover="background:#1E6D93;transform:translateY(-2px)">NOTIFY ME →</button>
+          </form>
+        </sc-if>
+        <sc-if value="{{ joined }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:14px;padding:16px 24px;border-radius:999px;background:rgba(238,250,251,.95);color:#06253b;font-size:18px;font-weight:700;box-shadow:0 24px 50px -24px rgba(6,37,59,.7)">
+            <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:28px;line-height:1">You’re on the list.</span>
+            <span style="font-weight:600">Stay rad.</span>
+          </div>
+        </sc-if>
+      </div>
+    </main>
+
+    <footer class="cs-in" style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:16px;font-weight:600;animation-delay:1.05s;text-shadow:0 1px 12px rgba(6,37,59,.5)">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <sc-for list="{{ socials }}" as="s" hint-placeholder-count="3">
+          <a href="{{ s.href }}" target="_blank" rel="noopener" style="padding:11px 18px;border-radius:999px;border:1.5px solid rgba(238,250,251,.75);background:rgba(6,37,59,.25);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-weight:700;font-size:15px;letter-spacing:.06em;transition:background .25s" style-hover="background:rgba(6,37,59,.5)">{{ s.l }}</a>
+        </sc-for>
+      </div>
+      <button onClick="{{ toggleSound }}" style="display:flex;align-items:center;gap:10px;border:1.5px solid rgba(238,250,251,.75);background:rgba(6,37,59,.25);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#EEFAFB;font-weight:700;font-size:15px;letter-spacing:.06em;padding:11px 18px;border-radius:999px;cursor:pointer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path></svg>
+        <span>{{ soundLabel }}</span>
+      </button>
+    </footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;instagram&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://www.instagram.com/radsurfnoflo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;facebook&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://www.facebook.com/profile.php?id=61553354830685&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { now: Date.now(), joined: false, sound: false };
+  canvas = React.createRef();
+  componentDidMount() {
+    this.m = { x: 0.5, y: 0.5, sx: 0.5, sy: 0.5 };
+    this.onMove = e => { this.m.x = e.clientX / innerWidth; this.m.y = e.clientY / innerHeight; };
+    this.onTap = e => { if (e.target.closest && e.target.closest('a,button,input,form')) return; this.ripples.push({ x: e.clientX, y: e.clientY, t: performance.now() }); };
+    addEventListener('pointermove', this.onMove); addEventListener('pointerdown', this.onTap);
+    this.ripples = [];
+    this.sparks = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random(), p: Math.random() * 6.28, w: 4 + Math.random() * 16 }));
+    this.clouds = Array.from({ length: 6 }, (_, i) => ({ x: Math.random(), y: 0.08 + Math.random() * 0.3, s: 0.6 + Math.random() * 0.9, v: 0.004 + Math.random() * 0.006 }));
+    this.t0 = performance.now();
+    const loop = now => { this.raf = requestAnimationFrame(loop); try { this.draw(now); } catch (e) { if (!this.err) { this.err = 1; console.error(String(e && e.stack || e)); } } };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); removeEventListener('pointermove', this.onMove); removeEventListener('pointerdown', this.onTap); if (this.audio) this.audio.pause(); clearInterval(this.fade); }
+  draw(now) {
+    const c = this.canvas.current; if (!c) return;
+    const w = c.clientWidth, h = c.clientHeight; if (!w || !h) return;
+    const d = Math.min(devicePixelRatio || 1, 2);
+    if (c.width !== Math.round(w * d) || c.height !== Math.round(h * d)) { c.width = Math.round(w * d); c.height = Math.round(h * d); }
+    const x = c.getContext('2d'); x.setTransform(d, 0, 0, d, 0, 0);
+    const t = (now - this.t0) / 1000, m = this.m; m.sx += (m.x - m.sx) * 0.03; m.sy += (m.y - m.sy) * 0.03;
+    const hz = h * (w < 640 ? 0.6 : 0.56);
+    let g = x.createLinearGradient(0, 0, 0, hz);
+    g.addColorStop(0, '#16618a'); g.addColorStop(0.45, '#5fb3d3'); g.addColorStop(0.82, '#bfe6ee'); g.addColorStop(1, '#ffe0a8');
+    x.fillStyle = g; x.fillRect(0, 0, w, hz + 2);
+    const sx = w * (0.72 + (m.sx - 0.5) * 0.06), sy = hz - Math.min(w, h) * 0.11 + Math.sin(t * 0.25) * 4 + (m.sy - 0.5) * 12, sr = Math.min(w, h) * 0.075;
+    g = x.createRadialGradient(sx, sy, 0, sx, sy, sr * 9);
+    g.addColorStop(0, 'rgba(255,236,190,.85)'); g.addColorStop(0.12, 'rgba(255,214,150,.45)'); g.addColorStop(0.4, 'rgba(255,200,140,.12)'); g.addColorStop(1, 'rgba(255,200,140,0)');
+    x.fillStyle = g; x.fillRect(0, 0, w, hz);
+    x.fillStyle = '#fff6df'; x.beginPath(); x.arc(sx, sy, sr, 0, 6.283); x.fill();
+    for (const cl of this.clouds) {
+      cl.x += cl.v / 60; if (cl.x > 1.3) cl.x = -0.3;
+      const cx = cl.x * w, cy = cl.y * hz, s = cl.s * Math.min(w, 1400) * 0.12;
+      for (let k = 0; k < 5; k++) {
+        const ox = (k - 2) * s * 0.55, oy = -Math.abs(k - 2) * -s * 0.08, r = s * (0.55 - Math.abs(k - 2) * 0.09);
+        g = x.createRadialGradient(cx + ox, cy + oy, 0, cx + ox, cy + oy, r);
+        g.addColorStop(0, 'rgba(255,255,255,.75)'); g.addColorStop(0.6, 'rgba(255,250,240,.35)'); g.addColorStop(1, 'rgba(255,250,240,0)');
+        x.fillStyle = g; x.beginPath(); x.ellipse(cx + ox, cy + oy, r, r * 0.45, 0, 0, 6.283); x.fill();
+      }
+    }
+    g = x.createLinearGradient(0, hz, 0, h);
+    g.addColorStop(0, '#3a95b5'); g.addColorStop(0.35, '#1E6D93'); g.addColorStop(1, '#06253b');
+    x.fillStyle = g; x.fillRect(0, hz, w, h - hz);
+    for (const sp of this.sparks) {
+      const yy = hz + Math.pow(sp.y, 1.7) * (h - hz) * 0.75;
+      const spread = 0.04 + (yy - hz) / (h - hz) * 0.22;
+      const xx = sx + (sp.x - 0.5) * w * spread * 2 + Math.sin(t * 0.8 + sp.p) * 8;
+      const a = Math.max(0, Math.sin(t * 2.4 + sp.p)) * (1 - sp.y * 0.7);
+      if (a < 0.05) continue;
+      x.fillStyle = 'rgba(255,240,205,' + (a * 0.85).toFixed(3) + ')';
+      x.fillRect(xx - sp.w / 2, yy, sp.w * (1 - sp.y * 0.4), 1.6 + sp.y * 1.4);
+    }
+    const L = 7;
+    for (let i = 0; i < L; i++) {
+      const k = i / (L - 1), base = hz + Math.pow(k, 1.6) * (h - hz) * 0.95 + 6;
+      const amp = 2 + k * k * 26, len = 140 + k * 520, sp = 0.5 + k * 0.9, ph = i * 1.7;
+      const push = (m.sx - 0.5) * 40 * k;
+      const yAt = X => base + Math.sin((X + push) / len * 6.283 + t * sp + ph) * amp + Math.sin((X - push) / (len * 0.43) * 6.283 - t * sp * 1.3 + ph) * amp * 0.35;
+      x.beginPath(); x.moveTo(0, h);
+      for (let X = 0; X <= w + 8; X += 8) x.lineTo(X, yAt(X));
+      x.lineTo(w, h); x.closePath();
+      g = x.createLinearGradient(0, base - amp, 0, base + 160);
+      const top = k < 0.5 ? [58 - k * 40, 150 - k * 40, 181 - k * 40] : [20, 100 - (k - 0.5) * 80, 140 - (k - 0.5) * 80];
+      g.addColorStop(0, 'rgba(' + top.map(Math.round).join(',') + ',0.92)');
+      g.addColorStop(1, 'rgba(6,37,59,0.96)');
+      x.fillStyle = g; x.fill();
+      x.beginPath();
+      for (let X = 0; X <= w + 8; X += 8) { const Y = yAt(X); X ? x.lineTo(X, Y) : x.moveTo(X, Y); }
+      x.strokeStyle = 'rgba(238,250,251,' + (0.18 + k * 0.5).toFixed(2) + ')'; x.lineWidth = 0.8 + k * 2.4; x.stroke();
+      if (k > 0.45) {
+        x.fillStyle = 'rgba(255,255,255,' + (0.35 + k * 0.4).toFixed(2) + ')';
+        for (let X = (t * 30 * sp + i * 37) % 23; X < w; X += 23) { const Y = yAt(X); x.beginPath(); x.arc(X, Y + 3 + Math.sin(X * 0.3 + t) * 2.5, 0.8 + k * 1.4, 0, 6.283); x.fill(); }
+      }
+    }
+    this.ripples = this.ripples.filter(r => now - r.t < 1800);
+    for (const r of this.ripples) {
+      const p = (now - r.t) / 1800;
+      for (let j = 0; j < 3; j++) {
+        const q = Math.max(0, p - j * 0.12); if (!q) continue;
+        x.strokeStyle = 'rgba(255,255,255,' + ((1 - q) * 0.7).toFixed(3) + ')'; x.lineWidth = 2;
+        x.beginPath(); x.ellipse(r.x, r.y, q * 160, q * (r.y > hz ? 48 : 160), 0, 0, 6.283); x.stroke();
+      }
+    }
+    g = x.createRadialGradient(w * 0.3, h * 0.5, 0, w * 0.3, h * 0.5, Math.max(w, h) * 0.75);
+    g.addColorStop(0, 'rgba(6,37,59,.28)'); g.addColorStop(1, 'rgba(6,37,59,0)');
+    x.fillStyle = g; x.fillRect(0, 0, w, h);
+  }
+  toggleSound() {
+    if (!this.audio) { this.audio = new Audio('./assets/ocean-waves.mp3'); this.audio.loop = true; this.audio.volume = 0; this.audio.preload = 'auto'; }
+    const on = !this.state.sound, au = this.audio;
+    clearInterval(this.fade);
+    if (on) au.play().catch(e => console.warn('audio', e && e.message));
+    this.fade = setInterval(() => {
+      const v = au.volume + (on ? 0.05 : -0.08);
+      au.volume = Math.max(0, Math.min(0.8, v));
+      if (on && au.volume >= 0.8) clearInterval(this.fade);
+      if (!on && au.volume <= 0) { clearInterval(this.fade); au.pause(); }
+    }, 60);
+    this.setState({ sound: on });
+  }
+  renderVals() {
+    const split = (str, off) => str.split('').map((c, i) => ({ c, d: ((i + off) * 0.12).toFixed(2) + 's' }));
+    return {
+      canvas: this.canvas,
+      w1: split('Something', 0), w2: split('rad', 9),
+      join: e => { e.preventDefault(); this.setState({ joined: true }); },
+      joined: this.state.joined, notJoined: !this.state.joined,
+      toggleSound: () => this.toggleSound(), soundLabel: this.state.sound ? 'SOUND ON' : 'HEAR THE WAVES',
+      socials: [
+        { l: 'INSTAGRAM', href: this.props.instagram || 'https://www.instagram.com/radsurfnoflo' },
+        { l: 'FACEBOOK', href: this.props.facebook || 'https://www.facebook.com/profile.php?id=61553354830685' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

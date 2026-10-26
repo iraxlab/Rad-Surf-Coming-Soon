@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#041f33;-webkit-font-smoothing:antialiased}
+a{color:#1E6D93;text-decoration:none}
+a:hover{color:#7DC7DB}
+::selection{background:#7DC7DB;color:#082f49}
+</style>
+</helmet>
+<div style="min-height:100vh;color:#082f49;font-family:'Instrument Sans',system-ui,sans-serif;font-size:19px;background-color:#efd6a6;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .12 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;)">
+<dc-import name="SiteNav" base="Rad Surf.dc.html" solid="{{ true }}" hint-size="100%,1px"></dc-import>
+
+<section data-screen-label="Legal header" style="position:relative;background:#1E6D93;color:#EEFAFB;padding:clamp(170px,15vw,230px) clamp(22px,6vw,104px) clamp(110px,10vw,160px)">
+  <div style="max-width:1600px;margin:0 auto">
+    <div style="font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#ffc46b;margin-bottom:18px">Legal</div>
+    <h1 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(46px,6.8vw,112px);line-height:.95;letter-spacing:-0.025em;text-wrap:balance">{{ title }}</h1>
+    <p style="margin:24px 0 0;font-size:20px;color:#EEFAFB">Last updated {{ updated }}</p>
+  </div>
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="position:absolute;bottom:-79px;left:0;width:100%;height:80px;display:block;z-index:1"><path d="M0 0h1440v38c-120 30-240 44-360 30S840 18 720 24 480 70 360 72 120 46 0 30z" fill="#1E6D93"></path></svg>
+</section>
+
+<section style="padding:clamp(50px,6vw,90px) clamp(16px,4vw,56px) clamp(90px,9vw,140px)">
+  <div style="max-width:1600px;margin:0 auto;display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start">
+    <nav style="flex:1 1 280px;position:sticky;top:120px;background:rgba(238,250,251,.85);border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:6px">
+      <span style="font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px">On this page</span>
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="8">
+        <a href="#{{ s.id }}" style="color:#082f49;font-size:17px;font-weight:600;padding:7px 0;line-height:1.35" style-hover="color:#1E6D93">{{ s.n }}. {{ s.h }}</a>
+      </sc-for>
+      <a href="{{ otherHref }}" style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(30,109,147,.2);font-weight:700;font-size:16px;color:#1E6D93">{{ otherLabel }} →</a>
+    </nav>
+    <article style="flex:3 1 560px;min-width:0;background:#EEFAFB;border-radius:32px;padding:clamp(30px,5vw,64px);display:flex;flex-direction:column;gap:42px;box-shadow:0 30px 60px -40px rgba(8,47,73,.5)">
+      <p style="margin:0;font-size:21px;line-height:1.7">{{ intro }}</p>
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="8">
+        <div id="{{ s.id }}" style="display:flex;flex-direction:column;gap:14px;scroll-margin-top:120px">
+          <h2 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.015em;line-height:1.15"><span style="color:#1E6D93">{{ s.n }}.</span> {{ s.h }}</h2>
+          <sc-for list="{{ s.ps }}" as="p" hint-placeholder-count="1">
+            <p style="margin:0;font-size:19px;line-height:1.75;text-wrap:pretty">{{ p.t }}</p>
+          </sc-for>
+        </div>
+      </sc-for>
+    </article>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" base="Rad Surf.dc.html" hint-size="100%,620px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;doc&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;terms&quot;,&quot;privacy&quot;],&quot;default&quot;:&quot;terms&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  docs = {
+    terms: {
+      title: 'Terms & Conditions', other: ['Privacy Policy', 'Privacy.dc.html'],
+      intro: 'These Terms & Conditions govern your use of theradsurf.com and any purchase you make from Rad Surf Company (“Rad Surf”, “we”, “us”). By using the site or placing an order, you agree to these terms.',
+      sections: [
+        ['Online store terms', 'You must be at least the age of majority in your state or country of residence to place an order, or have the consent of a parent or guardian. You agree not to use our products or this site for any unlawful purpose.'],
+        ['Products and pricing', 'We make every effort to show product colors and graphics accurately, but screens vary and we cannot guarantee an exact match. Prices are listed in US dollars and may change without notice. We reserve the right to limit quantities or discontinue any product at any time.'],
+        ['Orders and payment', 'When you place an order you will receive an email confirming that we have received it. We reserve the right to refuse or cancel any order, including orders that appear to be placed by resellers. Payments are processed securely by our payment providers; we do not store full card details.'],
+        ['Shipping', 'Orders are typically processed within [X] business days. Delivery times depend on your location and the shipping method selected at checkout. Risk of loss passes to you once the order is handed to the carrier.'],
+        ['Returns and exchanges', 'Unworn, unwashed items with original tags can be returned within [30] days of delivery. To start a return, contact us at [email address] with your order number. Stickers and sale items are final sale unless they arrive damaged. Refunds are issued to the original payment method once the return is received and inspected.'],
+        ['Intellectual property', 'All designs, graphics, logos, text and images on this site are the property of Rad Surf Company and are protected by copyright and trademark law. You may not copy, reproduce or resell them without written permission.'],
+        ['Reviews and submissions', 'If you send us comments, reviews, photos or ideas, you grant us a non-exclusive right to use, edit and publish them in connection with Rad Surf. You agree that your submissions will not violate the rights of any third party.'],
+        ['Limitation of liability', 'To the fullest extent permitted by law, Rad Surf is not liable for any indirect, incidental or consequential damages arising from your use of the site or our products. Our total liability for any claim is limited to the amount you paid for the product in question.'],
+        ['Governing law', 'These terms are governed by the laws of [State / Country], without regard to its conflict of law provisions.'],
+        ['Changes to these terms', 'We may update these terms from time to time. Changes take effect when they are posted on this page. Continued use of the site after changes are posted means you accept them.'],
+        ['Contact', 'Questions about these terms? Contact Rad Surf Company at [email address] or [mailing address].']
+      ]
+    },
+    privacy: {
+      title: 'Privacy Policy', other: ['Terms & Conditions', 'Terms.dc.html'],
+      intro: 'This Privacy Policy explains how Rad Surf Company (“Rad Surf”, “we”, “us”) collects, uses and protects your personal information when you visit theradsurf.com or make a purchase.',
+      sections: [
+        ['Information we collect', 'When you place an order or contact us, we collect information you provide, such as your name, email address, shipping and billing address, phone number and order details.|When you browse the site, we automatically collect certain technical information, such as your IP address, browser type, device information and the pages you visit.'],
+        ['How we use your information', 'We use your information to process and ship orders, communicate with you about your purchase, respond to questions, improve our website and products, prevent fraud, and, if you opt in, send you news and offers. You can unsubscribe from marketing emails at any time.'],
+        ['Cookies', 'We use cookies and similar technologies to keep your shopping bag working, remember your preferences and understand how visitors use the site. You can control cookies through your browser settings; disabling them may affect some site features.'],
+        ['Sharing your information', 'We share information only with service providers who help us run the store, such as our e-commerce platform, payment processors, shipping carriers and email providers. These partners may use your information only to provide services to us. We do not sell your personal information.'],
+        ['Data retention', 'We keep order information for as long as needed to fulfill your order and meet legal, tax and accounting obligations. Other information is kept only as long as it is needed for the purposes described here.'],
+        ['Your rights', 'Depending on where you live, you may have the right to access, correct, delete or export your personal information, and to object to or restrict certain processing. To make a request, contact us at [email address]. We will respond within the time required by applicable law.'],
+        ['Children’s privacy', 'Our site is not directed to children under 13, and we do not knowingly collect personal information from them. If you believe a child has provided us information, contact us and we will delete it.'],
+        ['Security', 'We use reasonable technical and organizational measures to protect your information. Payments are processed over encrypted connections by our payment providers. No method of transmission over the internet is completely secure.'],
+        ['Changes to this policy', 'We may update this policy from time to time. The “Last updated” date at the top of this page shows when it was last changed.'],
+        ['Contact', 'Questions about your privacy? Contact Rad Surf Company at [email address] or [mailing address].']
+      ]
+    }
+  };
+  renderVals() {
+    const d = this.docs[this.props.doc === 'privacy' ? 'privacy' : 'terms'];
+    if (typeof document !== 'undefined') document.title = d.title + ' · Rad Surf';
+    return {
+      title: d.title, intro: d.intro, updated: 'October 25, 2026', otherLabel: d.other[0], otherHref: d.other[1],
+      sections: d.sections.map(([h, body], i) => ({ n: i + 1, h, id: 's' + (i + 1), ps: body.split('|').map(t => ({ t })) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

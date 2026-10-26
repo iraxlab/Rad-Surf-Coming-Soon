@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+</helmet>
+<footer style="position:relative;background:#041f33;color:#EEFAFB;padding:clamp(70px,8vw,120px) clamp(20px,6vw,96px) 40px;overflow:hidden;font-family:'Instrument Sans',system-ui,sans-serif">
+  <div style="display:flex;flex-wrap:wrap;gap:48px">
+    <div style="display:flex;flex-direction:column;gap:18px;flex:2 1 380px;min-width:0">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;justify-content:center;height:74px;box-sizing:border-box;background:#ffffff;padding:14px 28px 12px 26px;border-radius:999px;box-shadow:0 14px 32px -12px rgba(0,0,0,.45)">
+          <img src="./radsurf-logo.jpg" alt="Rad Surf" style="height:52px;width:auto;display:block">
+        </span>
+        <span style="font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#EEFAFB">Rad Surf Company</span>
+      </div>
+      <span style="font-size:19px;line-height:1.6;color:#EEFAFB;opacity:.88;max-width:440px">Rad Surf creates surf-inspired hats and stickers for wave chasers and beach lovers.</span>
+      <a href="{{ shopHref }}" onClick="{{ goShop }}" style="align-self:flex-start;margin-top:8px;background:#ffc46b;color:#082f49;font-weight:700;font-size:16px;letter-spacing:.05em;padding:16px 28px;border-radius:999px;text-decoration:none;transition:transform .25s,background .25s" style-hover="transform:translateY(-2px);background:#EEFAFB;color:#082f49">SHOP NOW</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;font-size:18px;flex:1 1 200px">
+      <span style="font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#ffc46b">Explore</span>
+      <a href="{{ stickersHref }}" onClick="{{ goStickers }}" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Sticker Board Lab</a>
+      <a href="{{ storyHref }}" onClick="{{ goStory }}" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Our story</a>
+      <a href="{{ shopHref }}" onClick="{{ goShop }}" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Shop</a>
+      <a href="{{ whyHref }}" onClick="{{ goWhy }}" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Why Rad Surf</a>
+      <a href="{{ galleryHref }}" onClick="{{ goGallery }}" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Gallery</a>
+      <a href="Blog.dc.html" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Blog</a>
+      <a href="{{ contactHref }}" onClick="{{ goContact }}" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Contact &amp; Sand Canvas</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;font-size:18px;flex:1 1 200px">
+      <span style="font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#ffc46b">Legal</span>
+      <a href="Terms.dc.html" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Terms &amp; Conditions</a>
+      <a href="Privacy.dc.html" style="color:#EEFAFB;text-decoration:none" style-hover="color:#ffc46b">Privacy Policy</a>
+    </div>
+  </div>
+  <div style="margin-top:clamp(44px,5vw,76px);display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7DC7DB">Interactive Tide Letters · Move across STAY RAD to make waves</span>
+      <button onClick="{{ triggerSwell }}" style="border:1px solid rgba(125,199,219,.45);background:rgba(30,109,147,.35);color:#EEFAFB;font-weight:700;font-size:13px;letter-spacing:.06em;padding:7px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,background .2s" style-hover="transform:translateY(-2px);background:#7DC7DB;color:#082f49">
+        <span>🌊</span><span>Send High Tide Swell</span>
+      </button>
+    </div>
+    <div ref="{{ stayWrap }}" onClick="{{ triggerSwell }}" style="position:relative;width:100%;cursor:pointer;user-select:none;-webkit-user-select:none">
+      <svg viewBox="0 0 1200 225" style="width:100%;height:auto;display:block;overflow:visible">
+        <defs>
+          <clipPath id="stayRadTextClip">
+            <text x="12" y="188" textLength="1176" lengthAdjust="spacing" font-family="-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="216">STAY RAD</text>
+          </clipPath>
+          <linearGradient id="stayWaveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#7DC7DB"></stop>
+            <stop offset="55%" stop-color="#1E6D93"></stop>
+            <stop offset="100%" stop-color="#082f49"></stop>
+          </linearGradient>
+        </defs>
+        <!-- Outer Outline Stroke Rendered Behind the Clipped Interior so Zero Internal Lines Ever Show -->
+        <text x="12" y="188" textLength="1176" lengthAdjust="spacing" font-family="-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="216" fill="#08324f" stroke="#EEFAFB" stroke-opacity="0.82" stroke-width="9" stroke-linejoin="round" style="paint-order:stroke fill">STAY RAD</text>
+        <g clip-path="url(#stayRadTextClip)">
+          <rect x="0" y="0" width="1200" height="225" fill="#08324f"></rect>
+          <path ref="{{ waveBack }}" d="M 0 118 Q 150 92, 300 118 T 600 118 T 900 118 T 1200 118 L 1200 230 L 0 230 Z" fill="#1E6D93"></path>
+          <path ref="{{ waveFront }}" d="M 0 128 Q 150 152, 300 126 T 600 126 T 900 126 T 1200 126 L 1200 230 L 0 230 Z" fill="url(#stayWaveGrad)"></path>
+          <path ref="{{ waveFoam }}" d="M 0 128 Q 150 152, 300 126 T 600 126 T 900 126 T 1200 126" fill="none" stroke="#EEFAFB" stroke-width="5.5" stroke-linecap="round"></path>
+          <g ref="{{ surferGroup }}" transform="translate(340, 122)">
+            <ellipse cx="0" cy="0" rx="22" ry="5.2" fill="#ffc46b" stroke="#082f49" stroke-width="1.5"></ellipse>
+            <path d="M -5 0 L -2 -12 L 4 -22 M 6 0 L 3 -12 M -10 -17 L 12 -19" fill="none" stroke="#EEFAFB" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="4" cy="-27" r="4.2" fill="#EEFAFB"></circle>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:24px;padding-top:24px;border-top:1px solid rgba(238,250,251,.2);font-size:15px;color:#EEFAFB;opacity:.75">
+    <span>© 2026 Rad Surf Company</span>
+    <span>A portion of every sale supports ocean conservation efforts.</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:640},&quot;base&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Rad Surf.dc.html&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  stayWrap = React.createRef();
+  waveBack = React.createRef();
+  waveFront = React.createRef();
+  waveFoam = React.createRef();
+  surferGroup = React.createRef();
+  componentDidMount() {
+    this.mx = 0.5;
+    this.my = 0.5;
+    this.hover = 0;
+    this.swell = 0;
+    this.surferX = 0.28;
+    this.onMove = e => {
+      const el = this.stayWrap.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (e.clientY >= r.top - 40 && e.clientY <= r.bottom + 40 && e.clientX >= r.left && e.clientX <= r.right) {
+        this.mx = Math.max(0, Math.min(1, (e.clientX - r.left) / Math.max(1, r.width)));
+        this.my = Math.max(0, Math.min(1, (e.clientY - r.top) / Math.max(1, r.height)));
+        this.hover = 1;
+      } else {
+        this.hover = 0;
+      }
+    };
+    addEventListener('pointermove', this.onMove, { passive: true });
+    let last = performance.now();
+    const loop = now => {
+      this.raf = requestAnimationFrame(loop);
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      this.animateWaves(now * 0.001, dt);
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    removeEventListener('pointermove', this.onMove);
+  }
+  animateWaves(t, dt) {
+    const wb = this.waveBack.current, wf = this.waveFront.current, wfoam = this.waveFoam.current, sg = this.surferGroup.current;
+    if (!wb || !wf || !wfoam) return;
+    if (this.swell > 0) this.swell = Math.max(0, this.swell - dt * 0.55);
+    const swellBoost = Math.sin(this.swell * Math.PI) * 68;
+    const baseLevel = 122 - swellBoost - (this.hover ? (0.5 - this.my) * 32 : 0);
+
+    const w = 1200, h = 230, step = 40;
+    let dBack = 'M 0 ' + h;
+    for (let x = 0; x <= w; x += step) {
+      const nx = x / w;
+      const dist = Math.abs(nx - this.mx);
+      const bump = this.hover ? Math.exp(-dist * dist * 28) * 36 : 0;
+      const wy = baseLevel - 8 + Math.sin(nx * 7 - t * 2.4) * 14 + Math.cos(nx * 13 + t * 1.7) * 6 - bump;
+      dBack += ' L ' + x + ' ' + wy.toFixed(1);
+    }
+    dBack += ' L ' + w + ' ' + h + ' Z';
+    wb.setAttribute('d', dBack);
+
+    const waveYAt = nx => {
+      const dist = Math.abs(nx - this.mx);
+      const bump = this.hover ? Math.exp(-dist * dist * 24) * 42 : 0;
+      return baseLevel + 6 + Math.sin(nx * 6.5 + t * 3.0) * 15 + Math.sin(nx * 15 - t * 3.6) * 5 - bump;
+    };
+
+    let dFront = 'M 0 ' + h, dFoam = '';
+    for (let x = 0; x <= w; x += step) {
+      const wy = waveYAt(x / w).toFixed(1);
+      dFront += ' L ' + x + ' ' + wy;
+      dFoam += (x === 0 ? 'M ' : ' L ') + x + ' ' + wy;
+    }
+    dFront += ' L ' + w + ' ' + h + ' Z';
+    wf.setAttribute('d', dFront);
+    wfoam.setAttribute('d', dFoam);
+
+    if (sg) {
+      const targetX = this.hover ? this.mx : ((t * 0.09) % 0.84) + 0.08;
+      this.surferX += (targetX - this.surferX) * Math.min(1, dt * 3.8);
+      const sx = this.surferX * w;
+      const sy = waveYAt(this.surferX);
+      const slope = (waveYAt(this.surferX + 0.01) - waveYAt(this.surferX - 0.01)) / (0.02 * w);
+      const deg = (Math.atan(slope) * 180 / Math.PI) * 0.65;
+      sg.setAttribute('transform', 'translate(' + sx.toFixed(1) + ',' + (sy - 3).toFixed(1) + ') rotate(' + deg.toFixed(1) + ')');
+    }
+  }
+  scrollToSection(e, id) {
+    if (!id || (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0))) return;
+    const el = document.getElementById(id);
+    if (el) {
+      if (e) e.preventDefault();
+      try { history.pushState(null, '', '#' + id); } catch (err) {}
+      const calcTop = () => id === 'top' ? 0 : Math.max(0, el.getBoundingClientRect().top + window.scrollY - 84);
+      window.scrollTo({ top: calcTop(), behavior: 'smooth' });
+      clearTimeout(this.st);
+      this.st = setTimeout(() => {
+        const diff = Math.abs(window.scrollY - calcTop());
+        if (diff > 24) window.scrollTo({ top: calcTop(), behavior: 'smooth' });
+      }, 420);
+    }
+  }
+  renderVals() {
+    const b = this.props.base ?? 'Rad Surf.dc.html';
+    return {
+      stayWrap: this.stayWrap,
+      waveBack: this.waveBack,
+      waveFront: this.waveFront,
+      waveFoam: this.waveFoam,
+      surferGroup: this.surferGroup,
+      shopHref: b + '#shop', storyHref: b + '#story', stickersHref: b + '#stickers', whyHref: b + '#why', galleryHref: b + '#gallery', contactHref: b + '#contact',
+      goShop: e => this.scrollToSection(e, 'shop'),
+      goStory: e => this.scrollToSection(e, 'story'),
+      goStickers: e => this.scrollToSection(e, 'stickers'),
+      goWhy: e => this.scrollToSection(e, 'why'),
+      goGallery: e => this.scrollToSection(e, 'gallery'),
+      goContact: e => this.scrollToSection(e, 'contact'),
+      triggerSwell: () => { this.swell = 1; }
+    };
+  }
+}
+</script>
+</body>
+</html>

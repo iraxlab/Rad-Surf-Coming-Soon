@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#041f33;-webkit-font-smoothing:antialiased}
+a{color:#1E6D93;text-decoration:none}
+a:hover{color:#7DC7DB}
+::selection{background:#7DC7DB;color:#082f49}
+</style>
+</helmet>
+<div style="min-height:100vh;color:#082f49;font-family:'Instrument Sans',system-ui,sans-serif;font-size:19px;background-color:#efd6a6;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .12 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;)">
+<dc-import name="SiteNav" base="Rad Surf.dc.html" solid="{{ true }}" active="blog" hint-size="100%,1px"></dc-import>
+
+<section data-screen-label="Blog header" style="position:relative;background:radial-gradient(circle at 82% 20%,rgba(255,196,107,.34) 0%,rgba(125,199,219,.28) 28%,transparent 60%),radial-gradient(circle at 12% 80%,rgba(125,199,219,.32) 0%,transparent 52%),linear-gradient(135deg,#06253d 0%,#0f4c73 38%,#1E6D93 68%,#3fa0c0 100%);color:#EEFAFB;padding:clamp(170px,15vw,230px) clamp(22px,6vw,104px) clamp(130px,12vw,180px);overflow:hidden;clip-path:url(#blogWaveClip);-webkit-clip-path:url(#blogWaveClip)">
+  <!-- Decorative Sunbeams, Swell Contours & Barrel Wave Art -->
+  <svg viewBox="0 0 1440 420" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden">
+    <defs>
+      <linearGradient id="blogRayGold" x1="0%" y1="0%" x2="20%" y2="100%">
+        <stop offset="0%" stop-color="#ffc46b" stop-opacity="0.28"></stop>
+        <stop offset="100%" stop-color="#ffc46b" stop-opacity="0"></stop>
+      </linearGradient>
+      <linearGradient id="blogRayAqua" x1="0%" y1="0%" x2="30%" y2="100%">
+        <stop offset="0%" stop-color="#EEFAFB" stop-opacity="0.22"></stop>
+        <stop offset="100%" stop-color="#7DC7DB" stop-opacity="0"></stop>
+      </linearGradient>
+    </defs>
+    <!-- Sunbeams filtering through ocean surface -->
+    <polygon points="920,0 1120,0 820,420 640,420" fill="url(#blogRayGold)"></polygon>
+    <polygon points="1160,0 1310,0 1060,420 910,420" fill="url(#blogRayAqua)"></polygon>
+    <polygon points="520,0 660,0 410,420 290,420" fill="url(#blogRayAqua)" opacity="0.65"></polygon>
+    <!-- Glowing horizon sun & concentric swell rings -->
+    <circle cx="1150" cy="115" r="78" fill="#ffc46b" opacity="0.16"></circle>
+    <circle cx="1150" cy="115" r="135" fill="none" stroke="#ffc46b" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="8 8"></circle>
+    <circle cx="1150" cy="115" r="195" fill="none" stroke="#7DC7DB" stroke-opacity="0.2" stroke-width="1.5"></circle>
+    <!-- Flowing topographic ocean wave contours -->
+    <path d="M-40 290 C 240 210, 520 350, 820 260 C 1060 190, 1260 280, 1480 220" fill="none" stroke="rgba(238,250,251,0.18)" stroke-width="2"></path>
+    <path d="M-40 335 C 260 255, 540 390, 850 300 C 1090 230, 1280 320, 1480 265" fill="none" stroke="rgba(125,199,219,0.28)" stroke-width="2.5"></path>
+    <path d="M-40 375 C 280 300, 560 420, 880 340 C 1120 275, 1300 355, 1480 310" fill="none" stroke="rgba(255,196,107,0.25)" stroke-width="2"></path>
+    <!-- Sparkle bubbles -->
+    <circle cx="680" cy="140" r="4" fill="#ffc46b" opacity="0.55"></circle>
+    <circle cx="980" cy="210" r="5" fill="#EEFAFB" opacity="0.45"></circle>
+    <circle cx="1290" cy="175" r="3.5" fill="#ffc46b" opacity="0.6"></circle>
+  </svg>
+  <div style="position:relative;z-index:2;max-width:1760px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#ffc46b;background:rgba(4,31,51,.38);border:1px solid rgba(255,196,107,.45);padding:8px 16px;border-radius:999px;margin-bottom:18px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">
+        <span>🌊</span><span>The Rad Surf Journal</span>
+      </div>
+      <h1 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(64px,10vw,160px);line-height:.9;letter-spacing:-0.03em;text-shadow:0 10px 30px rgba(4,31,51,.45)">Blog</h1>
+      <p style="margin:24px 0 0;font-size:22px;line-height:1.5;max-width:560px;color:#EEFAFB;text-shadow:0 2px 12px rgba(4,31,51,.35)">Stories from the shoreline: surf, style and the ocean we love.</p>
+    </div>
+    <div style="display:flex;gap:6px;padding:7px;border-radius:999px;background:rgba(238,250,251,.95);box-shadow:0 20px 40px -18px rgba(4,31,51,.55);border:1.5px solid rgba(125,199,219,.6);flex-wrap:wrap">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="4">
+        <button onClick="{{ c.onClick }}" style="border:0;cursor:pointer;padding:13px 22px;border-radius:999px;font-weight:700;font-size:17px;font-family:inherit;background:{{ c.bg }};color:{{ c.color }};transition:background .25s">{{ c.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <svg width="0" height="0" style="position:absolute;pointer-events:none">
+    <defs>
+      <clipPath id="blogWaveClip" clipPathUnits="objectBoundingBox">
+        <path d="M 0,0 L 1,0 L 1,0.88 C 0.88,0.98 0.76,0.99 0.64,0.92 C 0.52,0.85 0.40,0.84 0.28,0.93 C 0.16,1.0 0.08,0.96 0,0.89 Z"></path>
+      </clipPath>
+    </defs>
+  </svg>
+</section>
+
+<section data-screen-label="Posts" style="padding:clamp(28px,4vw,56px) clamp(16px,4vw,56px) clamp(90px,9vw,140px)">
+  <div style="max-width:1760px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
+    <sc-if value="{{ hasFeatured }}" hint-placeholder-val="{{ true }}">
+      <a href="{{ featured.href }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));background:#EEFAFB;border-radius:36px;overflow:hidden;color:#082f49;box-shadow:0 40px 80px -40px rgba(8,47,73,.5);transition:transform .45s cubic-bezier(.2,.7,.2,1)" style-hover="transform:translateY(-6px);color:#082f49">
+        <div style="position:relative;width:100%;height:100%;min-height:360px;overflow:hidden">
+          <img src="{{ featured.src }}" alt="{{ featured.title }}" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+        </div>
+        <div style="padding:clamp(36px,5vw,68px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:20px">
+          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:16px;font-weight:600">
+            <span style="background:#7DC7DB;color:#082f49;padding:7px 14px;border-radius:999px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px">Latest · {{ featured.cat }}</span>
+            <span>{{ featured.date }}</span><span>·</span><span>{{ featured.read }}</span>
+          </div>
+          <h2 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(28px,3vw,44px);line-height:1.06;letter-spacing:-0.02em;text-wrap:balance">{{ featured.title }}</h2>
+          <p style="margin:0;font-size:19px;line-height:1.56;max-width:540px">{{ featured.excerpt }}</p>
+          <span style="font-weight:700;font-size:17px;letter-spacing:.05em;display:flex;gap:10px;color:#1E6D93">READ THE STORY <span>→</span></span>
+        </div>
+      </a>
+    </sc-if>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:28px">
+      <sc-for list="{{ rest }}" as="p" hint-placeholder-count="3">
+        <a href="{{ p.href }}" style="display:flex;flex-direction:column;background:#EEFAFB;border-radius:30px;overflow:hidden;color:#082f49;box-shadow:0 30px 60px -36px rgba(8,47,73,.5);transition:transform .45s cubic-bezier(.2,.7,.2,1)" style-hover="transform:translateY(-8px) rotate(-.5deg);color:#082f49">
+          <div style="position:relative;aspect-ratio:3/2;overflow:hidden">
+            <img src="{{ p.src }}" alt="{{ p.title }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+          </div>
+          <div style="padding:30px;display:flex;flex-direction:column;gap:14px;flex:1">
+            <div style="display:flex;gap:10px;font-size:15px;font-weight:600;color:#1E6D93;flex-wrap:wrap"><span style="font-weight:700;text-transform:uppercase;letter-spacing:.1em">{{ p.cat }}</span><span>·</span><span>{{ p.date }}</span></div>
+            <h3 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.015em;line-height:1.15;text-wrap:balance">{{ p.title }}</h3>
+            <p style="margin:0;font-size:18px;line-height:1.6">{{ p.excerpt }}</p>
+            <span style="margin-top:auto;padding-top:8px;font-weight:700;font-size:16px;letter-spacing:.05em;color:#1E6D93">READ MORE →</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" base="Rad Surf.dc.html" hint-size="100%,620px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    posts: [
+      {
+        slug: 'care-for-your-surf-hats-and-stickers',
+        title: 'How to care for your surf snapbacks & board stickers in salt and sun',
+        cat: 'Style', date: 'Oct 18, 2026', read: '4 min read', bg: '#caf3f9',
+        src: './assets/The_Rad_Surf_Gallery_7.jpg',
+        excerpt: 'Saltwater, UV rays and sandy truck beds put your gear to the test. A few simple habits keep your patch hats crisp and your vinyl stickers locked on.'
+      },
+      {
+        slug: 'surf-style-community',
+        title: 'Surf. Style. Community. — From local lineups to beach pop-ups',
+        cat: 'Style', date: 'Oct 11, 2026', read: '4 min read', bg: '#7DC7DB',
+        src: './assets/The_Rad_Surf_Gallery_3.jpg',
+        excerpt: 'Why Rad Surf started in North Florida and how our coastal crew brings surfers together on and off the water.'
+      },
+      {
+        slug: 'dawn-patrol',
+        title: 'Dawn patrol: why the first session of the day is the best one',
+        cat: 'Surf', date: 'Oct 4, 2026', read: '5 min read', bg: '#ffd9a8',
+        src: './assets/The_Rad_Surf_Gallery_8.jpg',
+        excerpt: 'Glassy water, empty lineups and a sunrise you earned. Here is how to make early sessions part of your routine.'
+      },
+      {
+        slug: 'protect-the-ocean',
+        title: 'Five small ways to protect the ocean this season',
+        cat: 'Ocean', date: 'Sep 20, 2026', read: '3 min read', bg: '#d9eef4',
+        src: './assets/The_Rad_Surf_Gallery_6.jpg',
+        excerpt: 'Conservation starts on the sand. Five easy habits that keep beaches clean and the water healthy.'
+      },
+      {
+        slug: 'reading-the-waves',
+        title: 'Reading the waves: a beginner’s guide to sets, swell and tides',
+        cat: 'Surf', date: 'Sep 6, 2026', read: '6 min read', bg: '#88BCD3',
+        src: './assets/Rad_Surf_Gallery_2.jpg',
+        excerpt: 'Spend ten minutes watching before you paddle out. Understanding sets, swell and tide makes every session better.'
+      },
+      {
+        slug: 'more-than-just-gear',
+        title: 'More than just gear: the story behind our NoFlo surfer stickers',
+        cat: 'Style', date: 'Aug 24, 2026', read: '3 min read', bg: '#EEFAFB',
+        src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_7.jpg',
+        excerpt: 'From surfboards and skate decks to rear windows, here is why we designed four signature surfer characters for our die-cut vinyl collection.'
+      }
+    ],
+    cat: 'All'
+  };
+  componentDidMount() { import('./blog-posts.js?v=' + Date.now()).then(m => this.setState({ posts: m.posts })).catch(e => console.error(e)); }
+  renderVals() {
+    const s = this.state;
+    const list = s.posts.filter(p => s.cat === 'All' || p.cat === s.cat).map(p => ({ ...p, href: 'Blog Post.dc.html?p=' + p.slug, slotId: 'blog-' + p.slug }));
+    const cats = ['All', 'Surf', 'Style', 'Ocean'].map(c => ({ label: c, onClick: () => this.setState({ cat: c }), bg: s.cat === c ? '#1E6D93' : 'transparent', color: s.cat === c ? '#EEFAFB' : '#082f49' }));
+    return { cats, hasFeatured: list.length > 0, featured: list[0] || {}, rest: list.slice(1) };
+  }
+}
+</script>
+</body>
+</html>

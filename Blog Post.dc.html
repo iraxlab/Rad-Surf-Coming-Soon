@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#041f33;-webkit-font-smoothing:antialiased}
+a{color:#1E6D93;text-decoration:none}
+a:hover{color:#7DC7DB}
+::selection{background:#7DC7DB;color:#082f49}
+</style>
+</helmet>
+<div style="min-height:100vh;color:#082f49;font-family:'Instrument Sans',system-ui,sans-serif;font-size:19px;background-color:#efd6a6;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .12 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;)">
+<dc-import name="SiteNav" base="Rad Surf.dc.html" solid="{{ true }}" active="blog" hint-size="100%,1px"></dc-import>
+
+<section data-screen-label="Post header" style="position:relative;background:radial-gradient(circle at 82% 20%,rgba(255,196,107,.34) 0%,rgba(125,199,219,.28) 28%,transparent 60%),radial-gradient(circle at 12% 80%,rgba(125,199,219,.32) 0%,transparent 52%),linear-gradient(135deg,#06253d 0%,#0f4c73 38%,#1E6D93 68%,#3fa0c0 100%);color:#EEFAFB;padding:clamp(160px,14vw,220px) clamp(22px,6vw,104px) clamp(200px,18vw,300px);overflow:hidden">
+  <svg viewBox="0 0 1440 500" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none">
+    <path d="M-40 310 C 240 230, 520 370, 820 280 C 1060 210, 1260 300, 1480 240" fill="none" stroke="rgba(238,250,251,0.16)" stroke-width="2"></path>
+    <path d="M-40 365 C 260 285, 540 410, 850 320 C 1090 250, 1280 340, 1480 285" fill="none" stroke="rgba(125,199,219,0.26)" stroke-width="2.5"></path>
+    <circle cx="1180" cy="130" r="140" fill="none" stroke="#ffc46b" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="8 8"></circle>
+  </svg>
+  <div style="position:relative;z-index:2;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:26px">
+    <a href="Blog.dc.html" style="align-self:flex-start;color:#ffc46b;font-weight:700;font-size:17px;letter-spacing:.05em">← ALL STORIES</a>
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:17px;font-weight:600">
+      <span style="background:#7DC7DB;color:#082f49;padding:7px 14px;border-radius:999px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px">{{ post.cat }}</span>
+      <span>{{ post.date }}</span><span>·</span><span>{{ post.read }}</span>
+    </div>
+    <h1 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(40px,5.4vw,84px);line-height:.98;letter-spacing:-0.025em;text-wrap:balance">{{ post.title }}</h1>
+    <p style="margin:0;font-size:23px;line-height:1.55;max-width:760px;color:#EEFAFB">{{ post.excerpt }}</p>
+  </div>
+</section>
+
+<section data-screen-label="Article" style="padding:0 clamp(16px,4vw,56px) clamp(80px,8vw,120px)">
+  <div style="max-width:1100px;margin:calc(-1 * clamp(150px,14vw,230px)) auto 0;position:relative">
+    <div style="position:relative;aspect-ratio:3/2;border-radius:36px;overflow:hidden;box-shadow:0 50px 90px -40px rgba(4,31,51,.6)">
+      <img src="{{ post.src }}" alt="{{ post.title }}" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+    </div>
+    <article style="max-width:760px;margin:clamp(50px,6vw,80px) auto 0;background:#EEFAFB;border-radius:32px;padding:clamp(30px,5vw,64px);display:flex;flex-direction:column;gap:22px;box-shadow:0 30px 60px -40px rgba(8,47,73,.5)">
+      <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-if value="{{ b.hasH }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:14px 0 0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:30px;letter-spacing:-0.015em;line-height:1.15">{{ b.h }}</h2>
+          </sc-if>
+          <p style="margin:0;font-size:21px;line-height:1.75;text-wrap:pretty">{{ b.p }}</p>
+        </div>
+      </sc-for>
+      <div style="margin-top:20px;padding-top:28px;border-top:1px solid rgba(30,109,147,.2);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap">
+        <span style="font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em">Ride the style. Stay rad.</span>
+        <a href="Rad Surf.dc.html#shop" style="background:#7DC7DB;color:#082f49;font-weight:700;font-size:17px;letter-spacing:.05em;padding:17px 28px;border-radius:999px">SHOP THE COLLECTION</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section data-screen-label="More stories" style="padding:0 clamp(16px,4vw,56px) clamp(90px,9vw,140px)">
+  <div style="max-width:1760px;margin:0 auto">
+    <h2 style="margin:0 0 34px;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(38px,4.4vw,66px);letter-spacing:-0.025em;line-height:1">More stories</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:28px">
+      <sc-for list="{{ more }}" as="p" hint-placeholder-count="3">
+        <a href="{{ p.href }}" style="display:flex;flex-direction:column;gap:14px;background:#EEFAFB;border-radius:30px;padding:30px;color:#082f49;box-shadow:0 30px 60px -36px rgba(8,47,73,.5);transition:transform .45s cubic-bezier(.2,.7,.2,1)" style-hover="transform:translateY(-8px);color:#082f49">
+          <div style="display:flex;gap:10px;font-size:15px;font-weight:600;color:#1E6D93"><span style="font-weight:700;text-transform:uppercase;letter-spacing:.1em">{{ p.cat }}</span><span>·</span><span>{{ p.read }}</span></div>
+          <h3 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:25px;letter-spacing:-0.015em;line-height:1.15;text-wrap:balance">{{ p.title }}</h3>
+          <span style="font-weight:700;font-size:16px;letter-spacing:.05em;color:#1E6D93">READ MORE →</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" base="Rad Surf.dc.html" hint-size="100%,620px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { posts: [] };
+  componentDidMount() { import('./blog-posts.js?v=' + Date.now()).then(m => this.setState({ posts: m.posts })).catch(e => console.error(e)); }
+  renderVals() {
+    const ps = this.state.posts, slug = new URLSearchParams(location.search).get('p');
+    const post = ps.find(p => p.slug === slug) || ps[0] || { title: '', body: [] };
+    if (post.title) document.title = post.title + ' · Rad Surf';
+    return {
+      post, slotId: 'blog-' + (post.slug || 'post'),
+      blocks: (post.body || []).map(b => ({ h: b.h || '', hasH: !!b.h, p: b.p })),
+      more: ps.filter(p => p !== post).slice(0, 3).map(p => ({ ...p, href: 'Blog Post.dc.html?p=' + p.slug }))
+    };
+  }
+}
+</script>
+</body>
+</html>
