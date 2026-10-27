@@ -14,8 +14,8 @@
   <div style="display:flex;flex-wrap:wrap;gap:48px">
     <div style="display:flex;flex-direction:column;gap:18px;flex:2 1 380px;min-width:0">
       <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;justify-content:center;height:74px;box-sizing:border-box;background:#ffffff;padding:14px 28px 12px 26px;border-radius:999px;box-shadow:0 14px 32px -12px rgba(0,0,0,.45)">
-          <img src="./radsurf-logo.jpg" alt="Rad Surf" style="height:52px;width:auto;display:block">
+        <span style="display:inline-flex;align-items:center;justify-content:center;height:auto;box-sizing:border-box;background:#ffffff;padding:7px 30px;border-radius:999px;box-shadow:0 14px 32px -12px rgba(0,0,0,.45)">
+          <img src="./radsurf-logo.jpg" alt="Rad Surf" style="height:72px;width:auto;display:block">
         </span>
         <span style="font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#EEFAFB">Rad Surf Company</span>
       </div>
@@ -49,9 +49,6 @@
   <div style="margin-top:clamp(44px,5vw,76px);display:flex;flex-direction:column;gap:10px">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
       <span style="font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7DC7DB">Interactive Tide Letters · Move across STAY RAD to make waves</span>
-      <button onClick="{{ triggerSwell }}" style="border:1px solid rgba(125,199,219,.45);background:rgba(30,109,147,.35);color:#EEFAFB;font-weight:700;font-size:13px;letter-spacing:.06em;padding:7px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:transform .2s,background .2s" style-hover="transform:translateY(-2px);background:#7DC7DB;color:#082f49">
-        <span>🌊</span><span>Send High Tide Swell</span>
-      </button>
     </div>
     <div ref="{{ stayWrap }}" onClick="{{ triggerSwell }}" style="position:relative;width:100%;cursor:pointer;user-select:none;-webkit-user-select:none">
       <svg viewBox="0 0 1200 225" style="width:100%;height:auto;display:block;overflow:visible">
