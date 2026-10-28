@@ -378,7 +378,7 @@ details summary span{transition:transform .25s}
       <sc-for list="{{ products }}" as="p" hint-placeholder-count="12">
         <div style="height:100%;box-sizing:border-box;display:{{ p.display }};flex-direction:column;gap:10px;background:#EEFAFB;border-radius:24px;padding:10px 10px 14px;box-shadow:0 22px 44px -28px rgba(8,47,73,.55);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-6px);box-shadow:0 36px 56px -28px rgba(8,47,73,.65)">
           <div onMouseMove="{{ zoomMove }}" onMouseLeave="{{ zoomLeave }}" style="position:relative;aspect-ratio:4/3.6;border-radius:16px;overflow:hidden;background:{{ p.imgBg }};cursor:zoom-in">
-            <img src="{{ p.src }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;padding:10px;box-sizing:border-box;display:block;transition:transform .3s cubic-bezier(.2,.7,.2,1);will-change:transform">
+            <img src="{{ p.src }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:{{ p.imgFit }};padding:{{ p.imgPad }};box-sizing:border-box;display:block;transition:transform .3s cubic-bezier(.2,.7,.2,1);will-change:transform">
             <span style="position:absolute;top:10px;left:10px;pointer-events:none;background:#1E6D93;color:#EEFAFB;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px">{{ p.cat }}</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:flex-start;min-height:44px;gap:8px;padding:0 6px">
@@ -1839,7 +1839,7 @@ void main(){
         const cur = s.sizes[p.id] || 'M';
         return {
           ...p, slotId: 'product-' + p.id, priceLabel: money(p.price), display: s.filter === 'All' || s.filter === p.cat ? 'flex' : 'none',
-          imgBg: p.cat === 'Stickers' ? '#F2DFB8' : '#ffffff', hasSizes: !!p.sizes, noSizes: !p.sizes, note: p.note || '', desc: p.cat === 'Stickers' ? this.stickerDesc : (p.desc || ''), hasDesc: p.cat === 'Stickers' || !!p.desc,
+          imgBg: p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff', imgFit: p.cat === 'Stickers' ? 'cover' : 'contain', imgPad: p.cat === 'Stickers' ? '0px' : '10px', hasSizes: !!p.sizes, noSizes: !p.sizes, note: p.note || '', desc: p.cat === 'Stickers' ? this.stickerDesc : (p.desc || ''), hasDesc: p.cat === 'Stickers' || !!p.desc,
           sizeList: (p.sizes || []).map(z => ({ s: z, onClick: () => this.setState(st => ({ sizes: { ...st.sizes, [p.id]: z } })), ...sel(z === cur) })),
           add: () => this.add(p, p.sizes ? cur : null)
         };
