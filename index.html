@@ -228,7 +228,7 @@ details summary span{transition:transform .25s}
     <!-- Pair 2: Collection Photo + Featured Collection Text -->
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));background:#88BCD3;border-radius:36px;overflow:hidden;box-shadow:0 40px 80px -36px rgba(8,47,73,.55)">
       <div class="intro-cell" style="position:relative;width:100%;height:100%;overflow:hidden">
-        <img src="./assets/The_Rad_Surf_Gallery_6.jpg" alt="Rad Surf Crew wearing Patch Hats with Surfboards" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block">
+        <img src="./assets/rad-surf-gallery-6.jpg" alt="Rad Surf Crew wearing Patch Hats with Surfboards" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block">
       </div>
       <div data-reveal="1" class="intro-cell" style="background:#88BCD3;color:#082f49;padding:clamp(36px,5vw,68px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:20px">
         <span style="font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#1E6D93">Featured Collection</span>
@@ -615,10 +615,10 @@ class Component extends DCLogic {
   sandWrap = React.createRef(); sandCanvas = React.createRef();
 
   products = [
-    { id: 'navy-white-patch-hat', name: 'Navy & White Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/Blue_on_White_Rad_Surf_Patch_Hat_The_Rad_Surf.jpg', note: 'Snapback · + Free Sticker!' },
+    { id: 'navy-white-patch-hat', name: 'Navy & White Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/rad-surf-blue-on-white-patch-hat.jpg', note: 'Snapback · + Free Sticker!' },
     { id: 'heather-white-patch-hat', name: 'Heather & White Patch Hat', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/Rad_Surf_Grey_on_White_Patch_Hat_clean.jpg', note: 'Snapback · + Free Sticker!' },
-    { id: 'grey-on-grey-patch-hat', name: 'Grey-on-Grey Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/Grey_on_Grey_Rad Surf_Patch_Hat_The_Rad_Surf.jpg', note: 'Snapback · + Free Sticker!' },
-    { id: 'white-mesh-patch-hat', name: 'Ice White & Grey Patch Hat', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/Rad_Surf_White_Patch_Hat_The_Rad_Surf.jpg', note: 'Snapback · + Free Sticker!' },
+    { id: 'grey-on-grey-patch-hat', name: 'Grey-on-Grey Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/rad-surf-grey-on-grey-patch-hat.jpg', note: 'Snapback · + Free Sticker!' },
+    { id: 'white-mesh-patch-hat', name: 'Ice White & Grey Patch Hat', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/rad-surf-white-patch-hat.jpg', note: 'Snapback · + Free Sticker!' },
     { id: 'noflo-surfer-dude-dark-hair', name: 'Surfer Dude Sticker (Dark Hair) – NoFlo', cat: 'Stickers', price: 5, bg: '#7DC7DB', src: './assets/products/stickers/surfer-dude-dark-hair-noflo.png', note: 'NoFlo · North Florida' },
     { id: 'noflo-surfer-dude-blonde', name: 'Surfer Dude Sticker (Blonde) – NoFlo', cat: 'Stickers', price: 5, bg: '#7DC7DB', src: './assets/products/stickers/surfer-dude-blonde-noflo.png', note: 'NoFlo · North Florida' },
     { id: 'noflo-surfer-girl-dark-hair', name: 'Surfer Girl Sticker (Dark Hair) – NoFlo', cat: 'Stickers', price: 5, bg: '#88BCD3', src: './assets/products/stickers/surfer-girl-dark-hair-noflo.png', note: 'NoFlo · North Florida' },
@@ -1901,28 +1901,28 @@ void main(){
       }),
       sendWave: () => this.sendBigWave(),
       gallery: (a => a.concat(a.map(g => ({ ...g, id: g.id + '-b' }))))([
-        { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_6.jpg', caption: 'Lineup Check · Grom Crew', rot: -2.1 },
+        { src: './assets/rad-surf-snapbacks-stickers-surfers-6.jpg', caption: 'Lineup Check · Grom Crew', rot: -2.1 },
         { src: './assets/Rad_Surf_Gallery_2.jpg', caption: 'Carving the Lip · Flo', rot: 2 },
-        { src: './assets/The_Rad_Surf_Gallery_3.jpg', caption: 'Sun & Salt · Patch Hat', rot: -1.8 },
-        { src: './assets/The_Rad_Surf_Gallery_5.jpg', caption: 'Dockside Shaka', rot: 2.2 },
-        { src: './assets/The_Rad_Surf_Gallery_7.jpg', caption: 'Beach Pop-Up · All 4 Hats & Stickers', rot: -1.8 },
-        { src: './assets/The_Rad_Surf_Gallery_8.jpg', caption: 'Carving the Pocket', rot: 2.2 },
-        { src: './assets/The_Rad_Surf_Gallery_9.jpg', caption: 'Shaka at the Pop-Up Tent', rot: -2.0 },
-        { src: './assets/The_Rad_Surf_Gallery_10.jpg', caption: 'Turtle Cove Board & Snapback', rot: 1.6 },
-        { src: './assets/The Rad Surf Gallery 10.jpg', caption: 'Corolla Surfboard Tail Slap', rot: -2.1 },
-        { src: './assets/The_Rad_Surf_Gallery_11.jpeg', caption: 'Heavy Offshore Barrel', rot: 2.3 },
-        { src: './assets/The Rad Surf Gallery 13.jpg', caption: 'White Sand · Grey on White Hat', rot: -1.9 },
-        { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_1.jpg', caption: 'Clear Die-Cut on the Nose', rot: -2.2 },
-        { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_2.jpg', caption: 'Stringer Slap · Surfer Girl', rot: 1.8 },
-        { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_3.jpg', caption: 'Deck Slap · Surfer Dude', rot: -2.0 },
-        { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_4.jpg', caption: 'Surf Pup · White Patch Hat', rot: 2.4 },
-        { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_5.jpg', caption: 'Rear Window · Surfer Girl Vinyl', rot: -1.7 },
-        { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_7.jpg', caption: 'FreeSurf Mag & Sticker Stack', rot: 2.3 },
+        { src: './assets/rad-surf-gallery-3.jpg', caption: 'Sun & Salt · Patch Hat', rot: -1.8 },
+        { src: './assets/rad-surf-gallery-5.jpg', caption: 'Dockside Shaka', rot: 2.2 },
+        { src: './assets/rad-surf-gallery-7.jpg', caption: 'Beach Pop-Up · All 4 Hats & Stickers', rot: -1.8 },
+        { src: './assets/rad-surf-gallery-8.jpg', caption: 'Carving the Pocket', rot: 2.2 },
+        { src: './assets/rad-surf-gallery-9.jpg', caption: 'Shaka at the Pop-Up Tent', rot: -2.0 },
+        { src: './assets/rad-surf-gallery-10.jpg', caption: 'Turtle Cove Board & Snapback', rot: 1.6 },
+        { src: './assets/rad-surf-gallery-10b.jpg', caption: 'Corolla Surfboard Tail Slap', rot: -2.1 },
+        { src: './assets/rad-surf-gallery-11.jpeg', caption: 'Heavy Offshore Barrel', rot: 2.3 },
+        { src: './assets/rad-surf-gallery-13.jpg', caption: 'White Sand · Grey on White Hat', rot: -1.9 },
+        { src: './assets/rad-surf-snapbacks-stickers-surfers-1.jpg', caption: 'Clear Die-Cut on the Nose', rot: -2.2 },
+        { src: './assets/rad-surf-snapbacks-stickers-surfers-2.jpg', caption: 'Stringer Slap · Surfer Girl', rot: 1.8 },
+        { src: './assets/rad-surf-snapbacks-stickers-surfers-3.jpg', caption: 'Deck Slap · Surfer Dude', rot: -2.0 },
+        { src: './assets/rad-surf-snapbacks-stickers-surfers-4.jpg', caption: 'Surf Pup · White Patch Hat', rot: 2.4 },
+        { src: './assets/rad-surf-snapbacks-stickers-surfers-5.jpg', caption: 'Rear Window · Surfer Girl Vinyl', rot: -1.7 },
+        { src: './assets/rad-surf-snapbacks-stickers-surfers-7.jpg', caption: 'FreeSurf Mag & Sticker Stack', rot: 2.3 },
         { src: './assets/Style Meets the Surf.jpg', caption: 'Ponte Vedra Shelf · Patch Hats', rot: -1.7 },
         { src: './assets/Style Meets the Surf 1.jpg', caption: 'Style Meets the Surf · Dual Stickers', rot: 2.5 },
         { src: './assets/Style Meets the Surf 2.jpg', caption: 'The Surf Stop · Board Rack', rot: -2.0 },
-        { src: './assets/Surf. Style. Community..jpg', caption: 'Aqua East Board & Patch Hat', rot: 1.8 },
-        { src: './assets/Surf. Style. Community. 2.jpg', caption: 'Groms on the Sand · Patch Hats', rot: -2.1 },
+        { src: './assets/rad-surf-surf-style-community-1.jpg', caption: 'Aqua East Board & Patch Hat', rot: 1.8 },
+        { src: './assets/rad-surf-surf-style-community-2.jpg', caption: 'Groms on the Sand · Patch Hats', rot: -2.1 },
         { src: './assets/Rad Surf Vibe.jpg', caption: 'Top Down, Board Loaded', rot: 2.2 },
         { src: './assets/Surf Expo.jpg', caption: 'Surf Expo · Coastal Lineup', rot: -1.9 }
       ].map((g, i) => ({ id: 'gallery-' + (i + 1), src: g.src, caption: g.caption, rot: g.rot, mt: i % 2 ? 36 : 0 }))),

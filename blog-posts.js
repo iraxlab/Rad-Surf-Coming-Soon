@@ -4,7 +4,7 @@ export const posts = [
     slug: 'care-for-your-surf-hats-and-stickers',
     title: 'How to care for your surf snapbacks & board stickers in salt and sun',
     cat: 'Style', date: 'Oct 18, 2026', read: '4 min read', bg: '#caf3f9',
-    src: './assets/The_Rad_Surf_Gallery_7.jpg',
+    src: './assets/rad-surf-gallery-7.jpg',
     excerpt: 'Saltwater, UV rays and sandy truck beds put your gear to the test. A few simple habits keep your patch hats crisp and your vinyl stickers locked on.',
     body: [
       { p: 'Your favorite Rad Surf snapback goes everywhere with you: the dawn patrol check, the drive down A1A, and the post-session taco run. Salt spray, UV and sand are tough on gear, so a little care goes a long way.' },
@@ -18,19 +18,19 @@ export const posts = [
     slug: 'surf-style-community',
     title: 'Surf. Style. Community. — From local lineups to beach pop-ups',
     cat: 'Style', date: 'Oct 11, 2026', read: '4 min read', bg: '#7DC7DB',
-    src: './assets/The_Rad_Surf_Gallery_3.jpg',
+    src: './assets/rad-surf-gallery-3.jpg',
     excerpt: 'Why Rad Surf started in North Florida and how our coastal crew brings surfers together on and off the water.',
     body: [
       { p: 'Rad Surf is built around a simple idea: sharing the stoke of the ocean through everyday coastal gear. Whether it is groms trading waves at the pier or friends catching up at a weekend beach pop-up, community comes first.' },
       { h: 'Designed for the lineup and the boardwalk', p: 'Our breathable mesh-back patch hats and waterproof die-cut surfer stickers are made for long sunny days on the sand.' },
-      { h: 'Free sticker with every hat at local pop-ups', p: 'Swing by the Rad Surf table at local surf contests, expos and coastal markets to check out all four patch hat colorways and grab limited-edition NoFlo stickers.' }
+      { h: 'Free sticker with every hat at local pop-ups', p: 'Swing by our Rad Surf booth at local surf contests, expos and coastal markets to check out all four patch hat colorways and grab limited-edition NoFlo stickers.' }
     ]
   },
   {
     slug: 'dawn-patrol',
     title: 'Dawn patrol: why the first session of the day is the best one',
     cat: 'Surf', date: 'Oct 4, 2026', read: '5 min read', bg: '#ffd9a8',
-    src: './assets/The_Rad_Surf_Gallery_8.jpg',
+    src: './assets/rad-surf-gallery-8.jpg',
     excerpt: 'Glassy water, empty lineups and a sunrise you earned. Here is how to make early sessions part of your routine.',
     body: [
       { p: 'There is a reason surfers set alarms for 5 a.m. Morning winds are usually light or offshore, which leaves the water smooth and the waves clean. The lineup is quieter, and you paddle out under a sky that changes color by the minute.' },
@@ -43,7 +43,7 @@ export const posts = [
     slug: 'protect-the-ocean',
     title: 'Five small ways to protect the ocean this season',
     cat: 'Ocean', date: 'Sep 20, 2026', read: '3 min read', bg: '#d9eef4',
-    src: './assets/The_Rad_Surf_Gallery_6.jpg',
+    src: './assets/rad-surf-gallery-6.jpg',
     excerpt: 'Conservation starts on the sand. Five easy habits that keep beaches clean and the water healthy.',
     body: [
       { p: 'A portion of every Rad Surf sale supports ocean conservation efforts. Here are a few things anyone can do on their next beach day.' },
@@ -72,7 +72,7 @@ export const posts = [
     slug: 'more-than-just-gear',
     title: 'More than just gear: the story behind our NoFlo surfer stickers',
     cat: 'Style', date: 'Aug 24, 2026', read: '3 min read', bg: '#EEFAFB',
-    src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_7.jpg',
+    src: './assets/rad-surf-snapbacks-stickers-surfers-7.jpg',
     excerpt: 'From surfboards and skate decks to rear windows, here is why we designed four signature surfer characters for our die-cut vinyl collection.',
     body: [
       { p: 'Every surfer has their own style on a wave. When we created our signature Rad Surf crest, we wanted everyone in the lineup to see themselves riding that curl.' },
