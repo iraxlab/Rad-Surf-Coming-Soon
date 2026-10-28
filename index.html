@@ -82,6 +82,7 @@ input,textarea,button{font-family:inherit}
 @keyframes birdBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 @keyframes birdFlap{0%{transform:scaleY(1)}100%{transform:scaleY(-.55)}}
 @media (prefers-reduced-motion:reduce){.bird-fly,.bird-bob,.bird-wing{animation:none}}
+@media (max-width:900px){[data-faq-sticky]{position:relative !important;top:auto !important}}
 details summary::-webkit-details-marker{display:none}
 details[open] summary span{transform:rotate(45deg)}
 details summary span{transition:transform .25s}
@@ -246,7 +247,7 @@ details summary span{transition:transform .25s}
         <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(238,250,251,.14);border:1px solid rgba(238,250,251,.45);color:#EEFAFB;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:8px">
           <span>★ Signature Rad Surf Die-Cut Vinyl</span>
           <span>·</span>
-          <span style="color:#ffc46b">$5 Each or Free with Every Hat</span>
+          <span style="color:#ffc46b">$5 Each · Free with Every Hat or T-Shirt</span>
         </div>
         <h2 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-0.025em;color:#EEFAFB">Peel &amp; Slap: Sticker Up Your Board.</h2>
         <p style="margin:6px 0 0;font-size:16px;line-height:1.45;max-width:680px;color:#EEFAFB">Tap any of our waterproof, weatherproof clear die-cut stickers — or click directly on the surfboard deck — to slap them on without scrolling.</p>
@@ -369,7 +370,7 @@ details summary span{transition:transform .25s}
     <div style="margin-bottom:22px;background:#1E6D93;color:#EEFAFB;border-radius:18px;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 20px 40px -24px rgba(8,47,73,.55)">
       <div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px">
         <span style="background:#ffc46b;color:#082f49;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px">Beach Booth Special</span>
-        <span>Hats $25 · Die-Cut Vinyl Stickers $5 — Free Sticker included with every Hat purchase!</span>
+        <span>Hats $25 · Clear Die-Cut Stickers $5 — Get a FREE sticker with every hat or T-shirt purchase!</span>
       </div>
       <a href="#stickers" style="color:#ffc46b;font-weight:700;font-size:15px;letter-spacing:.04em">TEST STICKERS ON A BOARD ↑</a>
     </div>
@@ -458,7 +459,7 @@ details summary span{transition:transform .25s}
 
 <section id="faq" data-screen-label="FAQ" style="position:relative;background:#082f49;color:#EEFAFB;padding:clamp(80px,8vw,130px) clamp(20px,6vw,104px) clamp(110px,10vw,160px)">
   <div style="max-width:1760px;margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,80px);align-items:flex-start">
-    <div data-reveal="1" style="flex:1 1 340px;display:flex;flex-direction:column;gap:18px;position:sticky;top:120px">
+    <div data-reveal="1" data-faq-sticky="1" style="flex:1 1 340px;display:flex;flex-direction:column;gap:18px;position:sticky;top:120px;align-self:flex-start">
       <span style="font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#ffc46b">Rad Surf FAQ</span>
       <h2 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(36px,4.2vw,64px);line-height:1;letter-spacing:-0.02em;text-wrap:balance">Born with salt water in the soul.</h2>
       <p style="margin:0;font-size:19px;line-height:1.6;max-width:460px;color:#cfe6ee">Rad Surf was founded from a love of surfing and a mission to bring fun back to the sport. Here are the questions we hear most.</p>
@@ -812,10 +813,10 @@ void main(){
 
     // Initialize Slapped Stickers on the Surfboard (all 4 official Rad Surf sticker styles)
     this.slapped = [
-      { id: 'brown-surfer-dude-sticker', x: 0.25, y: 0.50, rot: -12, scale: 1, t0: 0 },
-      { id: 'brunette-surfer-girl-sticker', x: 0.44, y: 0.39, rot: 8, scale: 1, t0: 0 },
-      { id: 'blonde-surfer-dude-sticker', x: 0.61, y: 0.56, rot: -7, scale: 1, t0: 0 },
-      { id: 'blonde-surfer-girl-sticker', x: 0.77, y: 0.44, rot: 10, scale: 1, t0: 0 }
+      { id: 'brown-surfer-dude-sticker', x: 0.28, y: 0.50, rot: -10, scale: 1, t0: 0 },
+      { id: 'brunette-surfer-girl-sticker', x: 0.43, y: 0.42, rot: 7, scale: 1, t0: 0 },
+      { id: 'blonde-surfer-dude-sticker', x: 0.58, y: 0.55, rot: -6, scale: 1, t0: 0 },
+      { id: 'blonde-surfer-girl-sticker', x: 0.71, y: 0.45, rot: 8, scale: 1, t0: 0 }
     ];
     this.boardHover = null;
     this.dragSticker = null;
@@ -1038,6 +1039,26 @@ void main(){
     addEventListener('pointerdown', this.onBoardDown);
     addEventListener('pointermove', this.onBoardMove);
     addEventListener('pointerup', this.onBoardUp);
+    this.galStopped = false;
+    const stopGal = e => { const gt = this.galleryTrack.current; if (gt && e.target && gt.contains(e.target)) this.galStopped = true; };
+    this.galStop = stopGal;
+    addEventListener('pointerdown', stopGal, true);
+    addEventListener('touchstart', stopGal, { capture: true, passive: true });
+    addEventListener('wheel', stopGal, { capture: true, passive: true });
+    let galLast = performance.now(), galAcc = 0;
+    const galTick = now => {
+      const gt = this.galleryTrack.current, dt = Math.min(64, now - galLast); galLast = now;
+      if (gt && !this.galStopped && !this.galDrag) {
+        const r = gt.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < innerHeight) {
+          galAcc += dt * 0.045;
+          const step = Math.floor(galAcc); galAcc -= step;
+          if (step) { gt.scrollLeft += step; const half = gt.scrollWidth / 2; if (half > gt.clientWidth && gt.scrollLeft >= half) gt.scrollLeft -= half; }
+        }
+      }
+      this.galRaf = requestAnimationFrame(galTick);
+    };
+    this.galRaf = requestAnimationFrame(galTick);
     addEventListener('pointerdown', this.onGalleryDown);
     addEventListener('pointermove', this.onGalleryMove);
     addEventListener('pointerup', this.onGalleryUp);
@@ -1054,6 +1075,7 @@ void main(){
   }
   componentWillUnmount() {
     cancelAnimationFrame(this.raf); clearTimeout(this.tt); clearTimeout(this.hashTimer);
+    cancelAnimationFrame(this.galRaf); if (this.galStop) { removeEventListener('pointerdown', this.galStop, true); removeEventListener('touchstart', this.galStop, true); removeEventListener('wheel', this.galStop, true); }
     removeEventListener('pointermove', this.onMove);
     removeEventListener('scroll', this.onScroll);
     removeEventListener('pointermove', this.onSand, true);
@@ -1798,8 +1820,8 @@ void main(){
       mq1: this.mq1, mq2: this.mq2, story: this.story, storyWrap: this.storyWrap, deepCanvas: this.deepCanvas, bioCanvas: this.bioCanvas,
       boardWrap: this.boardWrap, boardCanvas: this.boardCanvas,
       galleryTrack: this.galleryTrack,
-      prevGallery: () => { const gt = this.galleryTrack.current; if (gt) gt.scrollBy({ left: -380, behavior: 'smooth' }); },
-      nextGallery: () => { const gt = this.galleryTrack.current; if (gt) gt.scrollBy({ left: 380, behavior: 'smooth' }); },
+      prevGallery: () => { this.galStopped = true; const gt = this.galleryTrack.current; if (gt) gt.scrollBy({ left: -380, behavior: 'smooth' }); },
+      nextGallery: () => { this.galStopped = true; const gt = this.galleryTrack.current; if (gt) gt.scrollBy({ left: 380, behavior: 'smooth' }); },
       sandWrap: this.sandWrap, sandCanvas: this.sandCanvas,
       count, scrolled: s.scrolled,
       word1: 'Rad'.split('').map(c => ({ c })), word2: 'Surf'.split('').map(c => ({ c })),
@@ -1878,7 +1900,7 @@ void main(){
         };
       }),
       sendWave: () => this.sendBigWave(),
-      gallery: [
+      gallery: (a => a.concat(a.map(g => ({ ...g, id: g.id + '-b' }))))([
         { src: './assets/The Rad Surf Snapbacks & Stickers for Surfers_6.jpg', caption: 'Lineup Check · Grom Crew', rot: -2.1 },
         { src: './assets/Rad_Surf_Gallery_2.jpg', caption: 'Carving the Lip · Flo', rot: 2 },
         { src: './assets/The_Rad_Surf_Gallery_3.jpg', caption: 'Sun & Salt · Patch Hat', rot: -1.8 },
@@ -1903,7 +1925,7 @@ void main(){
         { src: './assets/Surf. Style. Community. 2.jpg', caption: 'Groms on the Sand · Patch Hats', rot: -2.1 },
         { src: './assets/Rad Surf Vibe.jpg', caption: 'Top Down, Board Loaded', rot: 2.2 },
         { src: './assets/Surf Expo.jpg', caption: 'Surf Expo · Coastal Lineup', rot: -1.9 }
-      ].map((g, i) => ({ id: 'gallery-' + (i + 1), src: g.src, caption: g.caption, rot: g.rot, mt: i % 2 ? 36 : 0 })),
+      ].map((g, i) => ({ id: 'gallery-' + (i + 1), src: g.src, caption: g.caption, rot: g.rot, mt: i % 2 ? 36 : 0 }))),
       submit: e => { e.preventDefault(); const f = new FormData(e.target); this.setState({ sent: true, sentName: String(f.get('name') || 'friend').split(' ')[0] }); },
       sent: s.sent, notSent: !s.sent, sentName: s.sentName,
       openCart: () => this.setState({ cartOpen: true, toast: null }), closeCart: () => this.setState({ cartOpen: false }),
