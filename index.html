@@ -373,7 +373,7 @@ details summary span{transition:transform .25s}
     <div style="margin-bottom:22px;background:#1E6D93;color:#EEFAFB;border-radius:18px;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 20px 40px -24px rgba(8,47,73,.55)">
       <div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px">
         <span style="background:#ffc46b;color:#082f49;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px">Beach Booth Special</span>
-        <span>Hats $25 · Clear Die-Cut Stickers $5 — Get a FREE sticker with every hat or T-shirt purchase!</span>
+        <span>Tees $30 · Hats $25 · Clear Die-Cut Stickers $5 — Get a FREE sticker with every hat or T-shirt purchase!</span>
       </div>
       <a href="#stickers" style="color:#ffc46b;font-weight:700;font-size:15px;letter-spacing:.04em">TEST STICKERS ON A BOARD ↑</a>
     </div>
@@ -383,6 +383,13 @@ details summary span{transition:transform .25s}
           <div onMouseMove="{{ zoomMove }}" onMouseLeave="{{ zoomLeave }}" style="position:relative;aspect-ratio:4/3.6;border-radius:16px;overflow:hidden;background:{{ p.imgBg }};cursor:zoom-in">
             <img src="{{ p.src }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:{{ p.imgFit }};padding:{{ p.imgPad }};box-sizing:border-box;display:block;transition:transform .3s cubic-bezier(.2,.7,.2,1);will-change:transform">
             <span style="position:absolute;top:10px;left:10px;pointer-events:none;background:#1E6D93;color:#EEFAFB;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px">{{ p.cat }}</span>
+            <sc-if value="{{ p.hasViews }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;right:10px;bottom:10px;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(238,250,251,.94);box-shadow:0 8px 18px -10px rgba(8,47,73,.5)">
+                <sc-for list="{{ p.viewList }}" as="w" hint-placeholder-count="2">
+                  <button onClick="{{ w.onClick }}" style="border:0;cursor:pointer;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:{{ w.bg }};color:{{ w.color }}">{{ w.v }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
           </div>
           <div style="display:flex;flex-direction:column;gap:12px;padding:4px 8px 0;flex:1">
             <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;row-gap:6px;align-items:baseline">
@@ -623,10 +630,14 @@ class Component extends DCLogic {
   sandWrap = React.createRef(); sandCanvas = React.createRef();
 
   products = [
-    { id: 'navy-white-patch-hat', name: 'Navy & White Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/rad-surf-blue-on-white-patch-hat.jpg', note: 'Snapback · + Free Sticker!' },
-    { id: 'heather-white-patch-hat', name: 'Heather & White Patch Hat', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/Rad_Surf_Grey_on_White_Patch_Hat_clean.jpg', note: 'Snapback · + Free Sticker!' },
-    { id: 'grey-on-grey-patch-hat', name: 'Grey-on-Grey Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/rad-surf-grey-on-grey-patch-hat.jpg', note: 'Snapback · + Free Sticker!' },
-    { id: 'white-mesh-patch-hat', name: 'Ice White & Grey Patch Hat', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/rad-surf-white-patch-hat.jpg', note: 'Snapback · + Free Sticker!' },
+    { id: 'tee-ocean-blue-girl', name: 'Ocean Blue Surfer Girl Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-ocean-blue-back.png', src2: './assets/products/apparel/tee-ocean-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-midnight-black-dude', name: 'Midnight Black Surfer Dude Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-black-back.png', src2: './assets/products/apparel/tee-black-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-heather-grey-dude', name: 'Heather Grey Surfer Dude Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-heather-grey-back.png', src2: './assets/products/apparel/tee-heather-grey-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-pink-girl', name: 'Cotton Candy Pink Surfer Girl Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-pink-back.png', src2: './assets/products/apparel/tee-pink-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-sky-blue-girl', name: 'Sky Blue Surfer Girl Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-sky-blue-back.png', src2: './assets/products/apparel/tee-sky-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'hat-pink-surfer-girl', name: 'Pink Surfer Girl Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/hat-pink-front.png', src2: './assets/products/apparel/hat-pink-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
+    { id: 'hat-arctic-camo-surfer-girl', name: 'Arctic Camo Surfer Girl Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-camo-front.png', src2: './assets/products/apparel/hat-white-camo-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
+    { id: 'hat-white-surfer-girl', name: 'All-White Surfer Girl Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-side.png', note: 'Snapback · + Free Sticker!' },
     { id: 'noflo-surfer-dude-dark-hair', name: 'Surfer Dude Sticker (Dark Hair) – NoFlo', cat: 'Stickers', price: 5, bg: '#7DC7DB', src: './assets/products/stickers/surfer-dude-dark-hair-noflo.png', note: 'NoFlo · North Florida' },
     { id: 'noflo-surfer-dude-blonde', name: 'Surfer Dude Sticker (Blonde) – NoFlo', cat: 'Stickers', price: 5, bg: '#7DC7DB', src: './assets/products/stickers/surfer-dude-blonde-noflo.png', note: 'NoFlo · North Florida' },
     { id: 'noflo-surfer-girl-dark-hair', name: 'Surfer Girl Sticker (Dark Hair) – NoFlo', cat: 'Stickers', price: 5, bg: '#88BCD3', src: './assets/products/stickers/surfer-girl-dark-hair-noflo.png', note: 'NoFlo · North Florida' },
@@ -1842,12 +1853,12 @@ void main(){
         { n: '02', title: 'Giving Back', text: 'A portion of every sale supports ocean conservation efforts' },
         { n: '03', title: 'Inspired by the Elements', text: 'Designs that reflect the movement of water' }
       ],
-      filters: ['All', 'Hats', 'Stickers'].map(f => ({ label: f, onClick: () => this.setState({ filter: f }), ...sel(s.filter === f) })),
+      filters: ['All', 'T-Shirts', 'Hats', 'Stickers'].map(f => ({ label: f, onClick: () => this.setState({ filter: f }), ...sel(s.filter === f) })),
       products: this.products.map(p => {
-        const cur = s.sizes[p.id] || 'M';
+        const cur = s.sizes[p.id] || 'M'; const alt = !!(s.views || {})[p.id];
         return {
-          ...p, slotId: 'product-' + p.id, priceLabel: money(p.price), display: s.filter === 'All' || s.filter === p.cat ? 'flex' : 'none',
-          hasNote: !!p.note, imgBg: p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff', imgFit: p.cat === 'Stickers' ? 'cover' : 'contain', imgPad: p.cat === 'Stickers' ? '0px' : '10px', hasSizes: !!p.sizes, noSizes: !p.sizes, note: p.note || '', desc: p.cat === 'Stickers' ? this.stickerDesc : (p.desc || ''), hasDesc: p.cat === 'Stickers' || !!p.desc,
+          ...p, src: alt && p.src2 ? p.src2 : p.src, hasViews: !!p.src2, viewList: p.src2 ? [p.v1, p.v2].map((v, k) => ({ v, onClick: () => this.setState(st => ({ views: { ...(st.views || {}), [p.id]: k === 1 } })), ...sel((k === 1) === alt) })) : [], slotId: 'product-' + p.id, priceLabel: money(p.price), display: s.filter === 'All' || s.filter === p.cat ? 'flex' : 'none',
+          hasNote: !!p.note, imgBg: p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff', imgFit: p.cat === 'Stickers' ? 'cover' : 'contain', imgPad: p.cat === 'Stickers' ? '0px' : (p.cat === 'T-Shirts' ? '6px' : '10px'), hasSizes: !!p.sizes, noSizes: !p.sizes, note: p.note || '', desc: p.cat === 'Stickers' ? this.stickerDesc : (p.desc || ''), hasDesc: p.cat === 'Stickers' || !!p.desc,
           sizeList: (p.sizes || []).map(z => ({ s: z, onClick: () => this.setState(st => ({ sizes: { ...st.sizes, [p.id]: z } })), ...sel(z === cur) })),
           add: () => this.add(p, p.sizes ? cur : null)
         };
