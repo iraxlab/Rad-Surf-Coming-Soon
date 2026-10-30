@@ -1824,6 +1824,7 @@ void main(){
   zoomMove = e => {
     if (e.nativeEvent && e.nativeEvent.pointerType === 'touch') return;
     const box = e.currentTarget, img = box.querySelector('img'); if (!img) return;
+    if ((window.matchMedia && matchMedia('(hover: none)').matches) || (e.target.closest && e.target.closest('button'))) { img.style.transform = 'scale(1)'; return; }
     const r = box.getBoundingClientRect(), x = ((e.clientX - r.left) / r.width) * 100, y = ((e.clientY - r.top) / r.height) * 100;
     img.style.transformOrigin = x.toFixed(1) + '% ' + y.toFixed(1) + '%';
     img.style.transform = 'scale(' + (this.props.zoomLevel ?? 2.2) + ')';
@@ -1857,7 +1858,7 @@ void main(){
       products: this.products.map(p => {
         const cur = s.sizes[p.id] || 'M'; const alt = !!(s.views || {})[p.id];
         return {
-          ...p, src: alt && p.src2 ? p.src2 : p.src, hasViews: !!p.src2, viewList: p.src2 ? [p.v1, p.v2].map((v, k) => ({ v, onClick: () => this.setState(st => ({ views: { ...(st.views || {}), [p.id]: k === 1 } })), ...sel((k === 1) === alt) })) : [], slotId: 'product-' + p.id, priceLabel: money(p.price), display: s.filter === 'All' || s.filter === p.cat ? 'flex' : 'none',
+          ...p, src: alt && p.src2 ? p.src2 : p.src, hasViews: !!p.src2, viewList: p.src2 ? [p.v1, p.v2].map((v, k) => ({ v, onClick: (e) => { const im = e && e.currentTarget && e.currentTarget.closest('[style*="aspect-ratio"]'); const ig = im && im.querySelector('img'); if (ig) { ig.style.transform = 'scale(1)'; ig.style.transformOrigin = '50% 50%'; } this.setState(st => ({ views: { ...(st.views || {}), [p.id]: k === 1 } })); }, ...sel((k === 1) === alt) })) : [], slotId: 'product-' + p.id, priceLabel: money(p.price), display: s.filter === 'All' || s.filter === p.cat ? 'flex' : 'none',
           hasNote: !!p.note, imgBg: p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff', imgFit: p.cat === 'Stickers' ? 'cover' : 'contain', imgPad: p.cat === 'Stickers' ? '0px' : (p.cat === 'T-Shirts' ? '6px' : '10px'), hasSizes: !!p.sizes, noSizes: !p.sizes, note: p.note || '', desc: p.cat === 'Stickers' ? this.stickerDesc : (p.desc || ''), hasDesc: p.cat === 'Stickers' || !!p.desc,
           sizeList: (p.sizes || []).map(z => ({ s: z, onClick: () => this.setState(st => ({ sizes: { ...st.sizes, [p.id]: z } })), ...sel(z === cur) })),
           add: () => this.add(p, p.sizes ? cur : null)
