@@ -402,6 +402,9 @@ details summary span{transition:transform .25s}
             <sc-if value="{{ p.hasDesc }}" hint-placeholder-val="{{ false }}">
               <p style="margin:0;font-size:15px;line-height:1.5;color:#2a5a75;text-wrap:pretty">{{ p.desc }}</p>
             </sc-if>
+            <sc-if value="{{ p.hasColor }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:#082f49"><span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4a7d97">Color</span><span style="font-weight:700">{{ p.color }}</span></div>
+            </sc-if>
             <sc-if value="{{ p.hasSizes }}" hint-placeholder-val="{{ false }}">
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
                 <span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4a7d97;margin-right:4px">Size</span>
@@ -644,11 +647,11 @@ class Component extends DCLogic {
   sandWrap = React.createRef(); sandCanvas = React.createRef();
 
   products = [
-    { id: 'tee-ocean-blue-girl', name: 'Ocean Blue Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-ocean-blue-back.png', src2: './assets/products/apparel/tee-ocean-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-midnight-black-dude', startAlt: true, name: 'Men’s Black Rad T-Shirt', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-black-back.png', src2: './assets/products/apparel/tee-black-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-heather-grey-dude', name: 'Men’s Smokey Grey Rad T-Shirt', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-heather-grey-back.png', src2: './assets/products/apparel/tee-heather-grey-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-pink-girl', startAlt: true, name: 'Cotton Candy Pink Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-pink-back.png', src2: './assets/products/apparel/tee-pink-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-sky-blue-girl', name: 'Sky Blue Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-sky-blue-back.png', src2: './assets/products/apparel/tee-sky-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-ocean-blue-girl', name: 'Turquoise Frost Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-ocean-blue-back.png', src2: './assets/products/apparel/tee-ocean-blue-front.png', v1: 'Back', v2: 'Front', color: 'Turquoise Frost', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-midnight-black-dude', startAlt: true, name: 'Men’s Black Rad T-Shirt', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-black-back.png', src2: './assets/products/apparel/tee-black-front.png', v1: 'Back', v2: 'Front', color: 'Black', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-heather-grey-dude', name: 'Men’s Heathered Grey Rad T-Shirt', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-heather-grey-back.png', src2: './assets/products/apparel/tee-heather-grey-front.png', v1: 'Back', v2: 'Front', color: 'Heathered Grey', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-pink-girl', startAlt: true, name: 'Carnation Pink Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-pink-back.png', src2: './assets/products/apparel/tee-pink-front.png', v1: 'Back', v2: 'Front', color: 'Carnation Pink', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-sky-blue-girl', name: 'Ice Blue Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-sky-blue-back.png', src2: './assets/products/apparel/tee-sky-blue-front.png', v1: 'Back', v2: 'Front', color: 'Ice Blue', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
     { id: 'hat-pink-surfer-girl', name: 'Woman’s Pink Rad Hat', cat: 'Hats', price: 28, bg: '#EEFAFB', src: './assets/products/apparel/hat-pink-front.png', src2: './assets/products/apparel/hat-pink-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
     { id: 'hat-arctic-camo-surfer-girl', startAlt: true, name: 'Woman’s White Camo Rad Hat', cat: 'Hats', price: 28, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-camo-front.png', src2: './assets/products/apparel/hat-white-camo-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
     { id: 'hat-white-surfer-girl', name: 'Woman’s White Rad Hat', cat: 'Hats', price: 28, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-front.png', src2: './assets/products/apparel/hat-white-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
@@ -1884,7 +1887,7 @@ void main(){
         return {
           ...p, src: alt && p.src2 ? p.src2 : p.src, hasViews: !!p.src2, viewList: p.src2 ? [p.v1, p.v2].map((v, k) => ({ v, onClick: (e) => { const im = e && e.currentTarget && e.currentTarget.closest('[style*="aspect-ratio"]'); const ig = im && im.querySelector('img'); if (ig) { ig.style.transform = 'scale(1)'; ig.style.transformOrigin = '50% 50%'; } this.setState(st => ({ views: { ...(st.views || {}), [p.id]: k === 1 } })); }, ...sel((k === 1) === alt) })) : [], slotId: 'product-' + p.id, priceLabel: money(p.price), display: s.filter === 'All' || s.filter === p.cat ? 'flex' : 'none',
           hasNote: !!p.note, imgBg: p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff', imgFit: p.cat === 'Stickers' ? 'cover' : 'contain', imgPad: p.cat === 'Stickers' ? '0px' : (p.cat === 'T-Shirts' ? '6px' : '10px'), hasSizes: !!p.sizes, noSizes: !p.sizes, note: p.note || '', desc: p.cat === 'Stickers' ? this.stickerDesc : (p.desc || ''), hasDesc: p.cat === 'Stickers' || !!p.desc,
-          ...this.teeSpec(p), sizeList: (p.sizes || []).map(z => ({ s: z, onClick: () => this.setState(st => ({ sizes: { ...st.sizes, [p.id]: z } })), ...sel(z === cur) })),
+          ...this.teeSpec(p), hasColor: !!p.color, sizeList: (p.sizes || []).map(z => ({ s: z, onClick: () => this.setState(st => ({ sizes: { ...st.sizes, [p.id]: z } })), ...sel(z === cur) })),
           add: () => this.add(p, p.sizes ? cur : null)
         };
       }),
