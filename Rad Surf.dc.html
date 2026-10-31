@@ -373,7 +373,7 @@ details summary span{transition:transform .25s}
     <div style="margin-bottom:22px;background:#1E6D93;color:#EEFAFB;border-radius:18px;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 20px 40px -24px rgba(8,47,73,.55)">
       <div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px">
         <span style="background:#ffc46b;color:#082f49;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px">Beach Booth Special</span>
-        <span>Tees $30 · Hats $25 · Clear Die-Cut Stickers $5 — Get a FREE sticker with every hat or T-shirt purchase!</span>
+        <span>Tees $25 · Hats $28 · Clear Die-Cut Stickers $5 — Get a FREE sticker with every hat or T-shirt purchase!</span>
       </div>
       <a href="#stickers" style="color:#ffc46b;font-weight:700;font-size:15px;letter-spacing:.04em">TEST STICKERS ON A BOARD ↑</a>
     </div>
@@ -409,6 +409,20 @@ details summary span{transition:transform .25s}
                   <button onClick="{{ z.onClick }}" style="min-width:38px;height:32px;padding:0 8px;border-radius:999px;border:1.5px solid #1E6D93;cursor:pointer;font-weight:700;font-size:13px;background:{{ z.bg }};color:{{ z.color }};transition:background .2s">{{ z.s }}</button>
                 </sc-for>
               </div>
+            </sc-if>
+            <sc-if value="{{ p.isTee }}" hint-placeholder-val="{{ false }}">
+              <details style="border:1px solid rgba(30,109,147,.22);border-radius:14px;padding:0 14px;background:#F4FBFC">
+                <summary style="cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:11px 0;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1E6D93">Size guide &amp; fabric<span aria-hidden="true" style="font-size:18px;line-height:1">+</span></summary>
+                <div style="display:flex;flex-direction:column;gap:10px;padding-bottom:14px">
+                  <div style="display:grid;grid-template-columns:minmax(0,1.6fr) repeat({{ p.specCols }},minmax(0,1fr));gap:6px 8px;font-size:14px;color:#082f49">
+                    <span style="font-weight:700;color:#4a7d97;font-size:12px;letter-spacing:.08em;text-transform:uppercase">Inches</span>
+                    <sc-for list="{{ p.specHead }}" as="h" hint-placeholder-count="3"><span style="font-weight:800;text-align:center">{{ h }}</span></sc-for>
+                    <sc-for list="{{ p.specRows }}" as="r" hint-placeholder-count="12"><span style="{{ r.st }}">{{ r.t }}</span></sc-for>
+                  </div>
+                  <p style="margin:0;font-size:14px;line-height:1.5;color:#2a5a75">Soft 4.5 oz tri-blend (50% polyester, 25% combed ring-spun cotton, 25% rayon) · rib-knit neck · tear-away label.</p>
+                  <p style="margin:0;font-size:14px;line-height:1.5;color:#2a5a75">Care: machine wash cold with like colors, tumble dry low.</p>
+                </div>
+              </details>
             </sc-if>
             <div style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(30,109,147,.16)">
               <button onClick="{{ p.add }}" style="width:100%;border:0;cursor:pointer;background:#1E6D93;color:#EEFAFB;font-weight:700;font-size:15px;letter-spacing:.06em;padding:14px;border-radius:999px;transition:background .25s,color .25s" style-hover="background:#7DC7DB;color:#082f49">ADD TO BAG</button>
@@ -630,14 +644,14 @@ class Component extends DCLogic {
   sandWrap = React.createRef(); sandCanvas = React.createRef();
 
   products = [
-    { id: 'tee-ocean-blue-girl', name: 'Ocean Blue Surfer Girl Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-ocean-blue-back.png', src2: './assets/products/apparel/tee-ocean-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-midnight-black-dude', name: 'Midnight Black Surfer Dude Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-black-back.png', src2: './assets/products/apparel/tee-black-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-heather-grey-dude', name: 'Heather Grey Surfer Dude Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-heather-grey-back.png', src2: './assets/products/apparel/tee-heather-grey-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-pink-girl', name: 'Cotton Candy Pink Surfer Girl Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-pink-back.png', src2: './assets/products/apparel/tee-pink-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'tee-sky-blue-girl', name: 'Sky Blue Surfer Girl Tee', cat: 'T-Shirts', price: 30, bg: '#EEFAFB', src: './assets/products/apparel/tee-sky-blue-back.png', src2: './assets/products/apparel/tee-sky-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
-    { id: 'hat-pink-surfer-girl', name: 'Pink Surfer Girl Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/hat-pink-front.png', src2: './assets/products/apparel/hat-pink-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
-    { id: 'hat-arctic-camo-surfer-girl', name: 'Arctic Camo Surfer Girl Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-camo-front.png', src2: './assets/products/apparel/hat-white-camo-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
-    { id: 'hat-white-surfer-girl', name: 'All-White Surfer Girl Patch Trucker', cat: 'Hats', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-front.png', src2: './assets/products/apparel/hat-white-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
+    { id: 'tee-ocean-blue-girl', name: 'Ocean Blue Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-ocean-blue-back.png', src2: './assets/products/apparel/tee-ocean-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-midnight-black-dude', startAlt: true, name: 'Men’s Black Rad T-Shirt', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-black-back.png', src2: './assets/products/apparel/tee-black-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-heather-grey-dude', name: 'Men’s Smokey Grey Rad T-Shirt', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-heather-grey-back.png', src2: './assets/products/apparel/tee-heather-grey-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-pink-girl', startAlt: true, name: 'Cotton Candy Pink Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-pink-back.png', src2: './assets/products/apparel/tee-pink-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'tee-sky-blue-girl', name: 'Sky Blue Surfer Girl Tee', cat: 'T-Shirts', price: 25, bg: '#EEFAFB', src: './assets/products/apparel/tee-sky-blue-back.png', src2: './assets/products/apparel/tee-sky-blue-front.png', v1: 'Back', v2: 'Front', sizes: ['S','M','L','XL','XXL'], note: 'Unisex Tee · + Free Sticker!' },
+    { id: 'hat-pink-surfer-girl', name: 'Woman’s Pink Rad Hat', cat: 'Hats', price: 28, bg: '#EEFAFB', src: './assets/products/apparel/hat-pink-front.png', src2: './assets/products/apparel/hat-pink-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
+    { id: 'hat-arctic-camo-surfer-girl', startAlt: true, name: 'Woman’s White Camo Rad Hat', cat: 'Hats', price: 28, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-camo-front.png', src2: './assets/products/apparel/hat-white-camo-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
+    { id: 'hat-white-surfer-girl', name: 'Woman’s White Rad Hat', cat: 'Hats', price: 28, bg: '#EEFAFB', src: './assets/products/apparel/hat-white-front.png', src2: './assets/products/apparel/hat-white-side.png', v1: 'Front', v2: 'Side', note: 'Snapback · + Free Sticker!' },
     { id: 'noflo-surfer-dude-dark-hair', name: 'Surfer Dude Sticker (Dark Hair) – NoFlo', cat: 'Stickers', price: 5, bg: '#7DC7DB', src: './assets/products/stickers/surfer-dude-dark-hair-noflo.png', note: 'NoFlo · North Florida' },
     { id: 'noflo-surfer-dude-blonde', name: 'Surfer Dude Sticker (Blonde) – NoFlo', cat: 'Stickers', price: 5, bg: '#7DC7DB', src: './assets/products/stickers/surfer-dude-blonde-noflo.png', note: 'NoFlo · North Florida' },
     { id: 'noflo-surfer-girl-dark-hair', name: 'Surfer Girl Sticker (Dark Hair) – NoFlo', cat: 'Stickers', price: 5, bg: '#88BCD3', src: './assets/products/stickers/surfer-girl-dark-hair-noflo.png', note: 'NoFlo · North Florida' },
@@ -1830,6 +1844,16 @@ void main(){
     img.style.transform = 'scale(' + (this.props.zoomLevel ?? 2.2) + ')';
   };
   zoomLeave = e => { const img = e.currentTarget.querySelector('img'); if (img) img.style.transform = 'scale(1)'; };
+  teeSpec(p) {
+    if (p.cat !== 'T-Shirts') return { isTee: false };
+    const T = { S: ['28', '19', '17½', '35–37'], M: ['29', '20¼', '18¼', '38–40'], L: ['30', '22¼', '19', '41–43'], XL: ['31', '23¾', '19¾', '44–46'], XXL: ['32', '25¼', '20½', '47–49'] };
+    const cols = (p.sizes || []).filter(z => T[z]);
+    const labels = ['Body length', 'Chest width (flat)', 'Sleeve from center back', 'Fits chest'];
+    const rows = [];
+    labels.forEach((l, k) => { rows.push({ t: l, st: 'font-weight:600;color:#2a5a75' }); cols.forEach(z => rows.push({ t: T[z][k], st: 'text-align:center' })); });
+    return { isTee: true, specHead: cols, specCols: cols.length, specRows: rows };
+  }
+
   renderVals() {
     const s = this.state, money = n => '$' + n.toFixed(2).replace('.00', '');
     const count = s.cart.reduce((a, i) => a + i.qty, 0), sub = s.cart.reduce((a, i) => a + i.qty * i.price, 0);
@@ -1856,11 +1880,11 @@ void main(){
       ],
       filters: ['All', 'T-Shirts', 'Hats', 'Stickers'].map(f => ({ label: f, onClick: () => this.setState({ filter: f }), ...sel(s.filter === f) })),
       products: this.products.map(p => {
-        const cur = s.sizes[p.id] || 'M'; const alt = !!(s.views || {})[p.id];
+        const cur = s.sizes[p.id] || 'M'; const vw = (s.views || {})[p.id]; const alt = vw === undefined ? !!p.startAlt : vw;
         return {
           ...p, src: alt && p.src2 ? p.src2 : p.src, hasViews: !!p.src2, viewList: p.src2 ? [p.v1, p.v2].map((v, k) => ({ v, onClick: (e) => { const im = e && e.currentTarget && e.currentTarget.closest('[style*="aspect-ratio"]'); const ig = im && im.querySelector('img'); if (ig) { ig.style.transform = 'scale(1)'; ig.style.transformOrigin = '50% 50%'; } this.setState(st => ({ views: { ...(st.views || {}), [p.id]: k === 1 } })); }, ...sel((k === 1) === alt) })) : [], slotId: 'product-' + p.id, priceLabel: money(p.price), display: s.filter === 'All' || s.filter === p.cat ? 'flex' : 'none',
           hasNote: !!p.note, imgBg: p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff', imgFit: p.cat === 'Stickers' ? 'cover' : 'contain', imgPad: p.cat === 'Stickers' ? '0px' : (p.cat === 'T-Shirts' ? '6px' : '10px'), hasSizes: !!p.sizes, noSizes: !p.sizes, note: p.note || '', desc: p.cat === 'Stickers' ? this.stickerDesc : (p.desc || ''), hasDesc: p.cat === 'Stickers' || !!p.desc,
-          sizeList: (p.sizes || []).map(z => ({ s: z, onClick: () => this.setState(st => ({ sizes: { ...st.sizes, [p.id]: z } })), ...sel(z === cur) })),
+          ...this.teeSpec(p), sizeList: (p.sizes || []).map(z => ({ s: z, onClick: () => this.setState(st => ({ sizes: { ...st.sizes, [p.id]: z } })), ...sel(z === cur) })),
           add: () => this.add(p, p.sizes ? cur : null)
         };
       }),
