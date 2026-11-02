@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700;800&amp;display=swap"></helmet>
+<div style="font-family:'Instrument Sans',system-ui,sans-serif;color:#EEFAFB;position:relative;width:100%;aspect-ratio:16/8;min-height:300px;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.7);border:1.5px solid rgba(125,199,219,.35);touch-action:manipulation;cursor:pointer">
+    <canvas ref="{{ cv }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+    <div style="position:absolute;top:16px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;font-weight:800;font-size:clamp(16px,1.6vw,20px);color:#082f49">
+      <span style="background:rgba(238,250,251,.85);padding:8px 16px;border-radius:999px">Score <span ref="{{ scoreEl }}">0</span></span>
+      <span ref="{{ livesEl }}" style="background:rgba(238,250,251,.85);padding:8px 16px;border-radius:999px;color:#e8505b;letter-spacing:.1em">♥♥♥</span>
+      <span style="background:rgba(255,196,107,.92);padding:8px 16px;border-radius:999px">Best <span ref="{{ bestEl }}">0</span></span>
+    </div>
+    <div ref="{{ overlay }}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none;text-align:center;background:rgba(8,47,73,.38);transition:opacity .25s">
+      <span ref="{{ ovTitle }}" style="font-weight:800;font-size:clamp(30px,4vw,54px);letter-spacing:-0.02em;text-shadow:0 4px 24px rgba(0,0,0,.4)">Tap to drop in</span>
+      <span ref="{{ ovSub }}" style="font-weight:600;font-size:clamp(16px,1.5vw,20px);color:#EEFAFB;background:rgba(8,47,73,.55);padding:8px 16px;border-radius:999px">Tap anywhere on the wave to start · Computer: press Space</span>
+      <div ref="{{ howTo }}" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:92%;margin-top:4px">
+        <span style="background:#EEFAFB;color:#082f49;font-weight:800;font-size:clamp(13px,1.3vw,17px);padding:8px 14px;border-radius:999px">👆 Tap = Jump</span>
+        <span style="background:#EEFAFB;color:#082f49;font-weight:800;font-size:clamp(13px,1.3vw,17px);padding:8px 14px;border-radius:999px">👆👆 Tap again in air = Double jump</span>
+        <span style="background:#ffc46b;color:#082f49;font-weight:800;font-size:clamp(13px,1.3vw,17px);padding:8px 14px;border-radius:999px">🐚 Grab gold shells = +2</span>
+        <span style="background:#EEFAFB;color:#082f49;font-weight:800;font-size:clamp(13px,1.3vw,17px);padding:8px 14px;border-radius:999px">🦈 Dodge fins, rocks &amp; buoys</span>
+        <span style="background:#EEFAFB;color:#e8505b;font-weight:800;font-size:clamp(13px,1.3vw,17px);padding:8px 14px;border-radius:999px">♥♥♥ 3 lives</span>
+      </div>
+    </div>
+    <button ref="{{ shareBtn }}" onClick="{{ share }}" style="display:none;position:absolute;left:50%;bottom:22px;transform:translateX(-50%);border:0;cursor:pointer;background:#ffc46b;color:#082f49;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:16px;letter-spacing:.04em;padding:14px 24px;border-radius:999px;box-shadow:0 14px 30px -12px rgba(0,0,0,.55);white-space:nowrap">📸 Share my score</button>
+  </div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1000,"height":520}}'>
+class Component extends DCLogic {
+  cv = React.createRef(); scoreEl = React.createRef(); bestEl = React.createRef();
+  livesEl = React.createRef(); shareBtn = React.createRef(); howTo = React.createRef(); overlay = React.createRef(); ovTitle = React.createRef(); ovSub = React.createRef();
+
+  componentDidMount() {
+    this.best = +(localStorage.getItem('radsurf404best') || 0);
+    if (this.bestEl.current) this.bestEl.current.textContent = this.best;
+    this.surfer = new Image(); this.surfer.src = './assets/game/surfer.png';
+    this.mode = 'ready'; this.reset();
+    this.onKey = e => { if (e.code === 'Space' || e.code === 'ArrowUp') { const r = this.cv.current && this.cv.current.getBoundingClientRect(); if (r && r.bottom > 0 && r.top < innerHeight) { e.preventDefault(); this.tap(); } } };
+    this.onDown = e => { e.preventDefault(); this.tap(); };
+    addEventListener('keydown', this.onKey);
+    this.cv.current.addEventListener('pointerdown', this.onDown);
+    this.last = performance.now();
+    const loop = now => { this.raf = requestAnimationFrame(loop); const dt = Math.min(0.05, (now - this.last) / 1000); this.last = now; this.step(dt, now / 1000); this.draw(now / 1000); };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); removeEventListener('keydown', this.onKey); if (this.cv.current) this.cv.current.removeEventListener('pointerdown', this.onDown); }
+
+  reset() { this.y = 0; this.vy = 0; this.obs = []; this.spawn = 1.8; this.score = 0; this.speed = 0.8; this.dist = 0; this.spray = []; this.lives = 3; this.inv = 0; this.items = []; this.pops = []; this.jumps = 0; this.itemSpawn = 1.2; this.nextMile = 10; this.hearts(); if (this.scoreEl.current) this.scoreEl.current.textContent = 0; }
+  tap() {
+    if (this.mode === 'ready' || this.mode === 'over') { if (this.mode === 'over' && performance.now() - this.overAt < 500) return; this.reset(); this.mode = 'play'; this.ov(false); if (this.howTo.current) this.howTo.current.style.display = 'none'; if (this.shareBtn.current) this.shareBtn.current.style.display = 'none'; this.jump(); return; }
+    this.jump();
+  }
+  hearts() { if (this.livesEl.current) this.livesEl.current.textContent = '♥'.repeat(Math.max(0, this.lives)) + '♡'.repeat(Math.max(0, 3 - this.lives)); }
+  pop(t, col) { this.pops = this.pops.filter(p => p.l < 1.0 || p.t !== t); if (this.pops.length >= 2) this.pops.shift(); this.pops.push({ t, col: col || '#ffc46b', l: 1.1 }); }
+  hit(o) { o.hit = true; this.lives--; this.hearts(); this.inv = 1.6; if (this.lives <= 0) { this.crash(); return; } const m = ['Ouch!', 'Close one!', 'Hang on!']; this.pop(m[(Math.random() * m.length) | 0], '#ff8a7a'); }
+  jump() { if (this.jumps < 2) { this.jumps++; this.vy = this.jumps === 1 ? -780 : -640; for (let i = 0; i < 10; i++) this.spray.push({ x: 0, y: 0, vx: -80 - Math.random() * 160, vy: -120 - Math.random() * 200, l: 0.6 }); } }
+  ov(show, t, s) { const o = this.overlay.current; if (!o) return; o.style.opacity = show ? '1' : '0'; if (t) this.ovTitle.current.textContent = t; if (s) this.ovSub.current.textContent = s; }
+
+  wave(x, t, w, h) { const base = h * 0.66; return base + Math.sin(x / w * 6.283 * 1.4 + t * 1.6) * h * 0.03 + Math.sin(x / w * 6.283 * 3.1 - t * 2.2) * h * 0.012; }
+
+  step(dt, t) {
+    const c = this.cv.current; if (!c) return; const w = c.clientWidth, h = c.clientHeight;
+    for (const p of this.spray) { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 900 * dt; p.l -= dt; }
+    this.spray = this.spray.filter(p => p.l > 0);
+    if (this.pops) { for (const p of this.pops) p.l -= dt; this.pops = this.pops.filter(p => p.l > 0); }
+    if (this.mode !== 'play') return;
+    this.speed = 0.8 + Math.min(0.75, this.dist / 9000); this.inv = Math.max(0, this.inv - dt);
+    const vx = 330 * this.speed * (w / 1000);
+    this.dist += vx * dt / (w / 1000);
+    this.vy += 2500 * dt; this.y = Math.min(0, this.y + this.vy * dt); if (this.y === 0) { this.vy = 0; this.jumps = 0; }
+    this.spawn -= dt;
+    if (this.spawn <= 0) { const kinds = ['fin', 'rock', 'fin', 'buoy']; this.obs.push({ x: w + 40, k: kinds[(Math.random() * kinds.length) | 0], passed: false }); this.spawn = (1.45 + Math.random() * 1.1) / this.speed; }
+    this.itemSpawn -= dt;
+    if (this.itemSpawn <= 0) { this.items.push({ x: w + 30, hgt: 70 + Math.random() * 90, ph: Math.random() * 6 }); this.itemSpawn = 1.3 + Math.random() * 1.6; }
+    const sx = w * 0.22, sc = h / 420;
+    for (const o of this.obs) {
+      o.x -= vx * dt;
+      if (!o.passed && o.x < sx - 30 * sc) { o.passed = true; if (!o.hit) { this.score++; this.scoreEl.current.textContent = this.score; } }
+      const ow = (o.k === 'rock' ? 46 : o.k === 'buoy' ? 30 : 38) * sc, oh = (o.k === 'rock' ? 30 : o.k === 'buoy' ? 44 : 40) * sc;
+      if (!o.hit && this.inv <= 0 && Math.abs(o.x - sx) < (ow / 2 + 14 * sc) && -this.y * sc < oh * 0.7) { this.hit(o); if (this.mode !== 'play') return; }
+    }
+    this.obs = this.obs.filter(o => o.x > -80);
+    for (const it of this.items) { it.x -= vx * dt; if (!it.got && Math.abs(it.x - sx) < 34 * sc && Math.abs(-this.y * sc + 50 * sc - it.hgt * sc) < 46 * sc) { it.got = true; this.score += 2; this.scoreEl.current.textContent = this.score; this.pop('+2 Shell!', '#ffc46b'); } }
+    this.items = this.items.filter(it => it.x > -40 && !it.got);
+    if (this.score >= this.nextMile) { const m = ['Stoked!', 'Gnarly!', 'Radical!', 'Shaka!', 'Totally tubular!']; this.pop(m[(this.nextMile / 10 - 1) % m.length] + ' ' + this.nextMile, '#EEFAFB'); this.nextMile += 10; }
+  }
+  crash() {
+    this.mode = 'over'; this.overAt = performance.now(); this.lastScore = this.score; this.pops = [];
+    if (this.shareBtn.current) this.shareBtn.current.style.display = this.score > 0 ? 'block' : 'none';
+    if (this.score > this.best) { this.best = this.score; localStorage.setItem('radsurf404best', this.best); this.bestEl.current.textContent = this.best; }
+    const msgs = ['Total wipeout!', 'Gnarly crash!', 'Caught inside!', 'Shark bait!'];
+    this.ov(true, msgs[(Math.random() * msgs.length) | 0], 'Score ' + this.score + (this.score >= this.best && this.score > 0 ? ' · New best! 🤙' : '') + ' · Tap the wave to play again');
+  }
+
+  toast(msg) {
+    const host = this.cv.current && this.cv.current.parentNode; if (!host) return;
+    let t = host.querySelector('[data-rs-toast]');
+    if (!t) { t = document.createElement('div'); t.setAttribute('data-rs-toast', ''); t.style.cssText = 'position:absolute;left:50%;top:76px;transform:translateX(-50%);background:#EEFAFB;color:#082f49;font:800 15px "Instrument Sans",system-ui,sans-serif;padding:10px 18px;border-radius:999px;box-shadow:0 12px 26px -10px rgba(0,0,0,.5);transition:opacity .3s;white-space:nowrap;z-index:5;pointer-events:none'; host.appendChild(t); }
+    t.textContent = msg; t.style.opacity = '1'; clearTimeout(this.toastT); this.toastT = setTimeout(() => { t.style.opacity = '0'; }, 2600);
+  }
+  shareScore() {
+    const W = 1080, H = 1350, SH = 860, o = document.createElement('canvas'); o.width = W; o.height = H; const x = o.getContext('2d');
+    const F = (w, sz) => w + ' ' + sz + 'px "Instrument Sans", system-ui, sans-serif';
+    const sky = x.createLinearGradient(0, 0, 0, SH); sky.addColorStop(0, '#4fb0d3'); sky.addColorStop(0.5, '#a9dde9'); sky.addColorStop(0.72, '#ffe2b0'); sky.addColorStop(1, '#ffd08a');
+    x.fillStyle = sky; x.fillRect(0, 0, W, SH);
+    const sx0 = W * 0.72, sy0 = 330; const glow = x.createRadialGradient(sx0, sy0, 10, sx0, sy0, 420); glow.addColorStop(0, 'rgba(255,244,214,1)'); glow.addColorStop(0.18, 'rgba(255,232,180,.95)'); glow.addColorStop(0.19, 'rgba(255,214,150,.45)'); glow.addColorStop(1, 'rgba(255,214,150,0)');
+    x.fillStyle = glow; x.fillRect(0, 0, W, SH);
+    x.save(); x.translate(sx0, sy0); for (let k = 0; k < 14; k++) { x.rotate(Math.PI / 7); x.fillStyle = 'rgba(255,240,205,.12)'; x.beginPath(); x.moveTo(0, 0); x.lineTo(700, -40); x.lineTo(700, 40); x.fill(); } x.restore();
+    x.fillStyle = 'rgba(255,255,255,.9)';
+    for (const [cx, cy, r] of [[180, 230, 1], [560, 150, 0.8], [930, 520, 0.7]]) { x.beginPath(); x.ellipse(cx, cy, 110 * r, 30 * r, 0, 0, 6.283); x.ellipse(cx + 50 * r, cy - 22 * r, 66 * r, 34 * r, 0, 0, 6.283); x.ellipse(cx - 50 * r, cy - 10 * r, 50 * r, 24 * r, 0, 0, 6.283); x.fill(); }
+    x.strokeStyle = 'rgba(8,47,73,.75)'; x.lineWidth = 5; x.lineCap = 'round';
+    for (const [bx, by, bs] of [[300, 360, 1], [370, 330, 0.8], [250, 410, 0.7]]) { x.beginPath(); x.moveTo(bx - 22 * bs, by + 8 * bs); x.quadraticCurveTo(bx - 10 * bs, by - 8 * bs, bx, by); x.quadraticCurveTo(bx + 10 * bs, by - 8 * bs, bx + 22 * bs, by + 8 * bs); x.stroke(); }
+    const wave = (base, amp, f, ph, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(0, SH); for (let px = 0; px <= W; px += 6) x.lineTo(px, base + Math.sin(px / W * 6.283 * f + ph) * amp); x.lineTo(W, SH); x.fill(); };
+    wave(600, 14, 2.2, 0.6, '#5fb3d4'); wave(650, 18, 1.6, 2.1, '#2f86b2');
+    const top = px => 720 + Math.sin(px / W * 6.283 * 1.2 + 0.4) * 34;
+    x.fillStyle = '#14567a'; x.beginPath(); x.moveTo(0, SH); for (let px = 0; px <= W; px += 6) x.lineTo(px, top(px)); x.lineTo(W, SH); x.fill();
+    x.strokeStyle = 'rgba(238,250,251,.95)'; x.lineWidth = 7; x.beginPath(); for (let px = 0; px <= W; px += 6) px ? x.lineTo(px, top(px)) : x.moveTo(px, top(px)); x.stroke();
+    x.fillStyle = 'rgba(255,255,255,.9)'; for (let k = 0; k < 40; k++) { const px = 380 + Math.random() * 220, py = top(px) - Math.random() * 60; x.beginPath(); x.arc(px, py, 3 + Math.random() * 5, 0, 6.283); x.fill(); }
+    if (this.surfer.complete && this.surfer.naturalWidth) { const ih = 430, iw = ih * this.surfer.naturalWidth / this.surfer.naturalHeight, px = W * 0.5; x.save(); x.translate(px, top(px) + 18); x.rotate(-0.08); x.shadowColor = 'rgba(8,47,73,.35)'; x.shadowBlur = 34; x.shadowOffsetY = 16; x.drawImage(this.surfer, -iw * 0.42, -ih * 0.9, iw, ih); x.restore(); }
+    const fade = x.createLinearGradient(0, SH - 140, 0, SH); fade.addColorStop(0, 'rgba(8,47,73,0)'); fade.addColorStop(1, '#082f49'); x.fillStyle = fade; x.fillRect(0, SH - 140, W, 140);
+    const tg = x.createLinearGradient(0, 0, 0, 170); tg.addColorStop(0, 'rgba(8,47,73,.45)'); tg.addColorStop(1, 'rgba(8,47,73,0)'); x.fillStyle = tg; x.fillRect(0, 0, W, 170);
+    x.textAlign = 'left'; x.fillStyle = '#EEFAFB'; x.font = F(800, 46); x.fillText('RAD SURF', 72, 100);
+    x.textAlign = 'right'; x.font = F(800, 28); const lbl = 'WIPEOUT! HIGH SCORE', lw = x.measureText(lbl).width;
+    x.fillStyle = '#ffc46b'; x.beginPath(); x.roundRect(W - 72 - lw - 44, 62, lw + 44, 52, 26); x.fill(); x.fillStyle = '#082f49'; x.fillText(lbl, W - 94, 98);
+    x.fillStyle = '#082f49'; x.fillRect(0, SH, W, H - SH);
+    x.textAlign = 'left'; x.fillStyle = '#7DC7DB'; x.font = F(700, 34); x.fillText('I SCORED', 72, SH + 70);
+    x.fillStyle = '#EEFAFB'; x.font = F(800, 210); x.fillText(String(this.lastScore || 0), 62, SH + 250);
+    const nw = x.measureText(String(this.lastScore || 0)).width;
+    x.fillStyle = '#cfe6ee'; x.font = F(700, 36); x.fillText('points', 62 + nw + 22, SH + 248);
+    x.fillStyle = '#ffc46b'; x.font = F(800, 52); x.fillText('Can you beat it? 🤙', 72, SH + 330);
+    x.fillStyle = 'rgba(238,250,251,.12)'; x.fillRect(0, H - 112, W, 112);
+    x.fillStyle = '#EEFAFB'; x.font = F(800, 38); x.fillText('theradsurf.com', 72, H - 44);
+    x.textAlign = 'right'; x.fillStyle = '#ffc46b'; x.font = F(700, 32); x.fillText('@radsurfnoflo', W - 72, H - 46);
+    o.toBlob(async blob => {
+      if (!blob) return;
+      const n = this.lastScore || 0;
+      const caps = [
+        'Just scored ' + n + ' in Rad Surf Wipeout! 🏄‍♂️🌊 Think you can beat me? Play free at theradsurf.com 🤙 @radsurfnoflo #RadSurf #StayRad #SurfLife',
+        'Dodged sharks, rocks & buoys for ' + n + ' points 🦈🌊 Your turn! Play Wipeout at theradsurf.com 🤙 @radsurfnoflo #RadSurf #StayRad #SurfLife',
+        'New high score: ' + n + '! 🐚🏄 Bet you can’t beat it. Free surf game at theradsurf.com 🤙 @radsurfnoflo #RadSurf #StayRad #SurfLife'];
+      const cap = caps[(Math.random() * caps.length) | 0];
+      try { await navigator.clipboard.writeText(cap); this.toast('Caption copied! Just paste it in your post 📋'); } catch (e) {}
+      const file = new File([blob], 'my-rad-surf-score.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] }) && /iPhone|iPad|Android/i.test(navigator.userAgent)) { try { await navigator.share({ files: [file], title: 'My Rad Surf score', text: cap }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'my-rad-surf-score.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }, 'image/png');
+  }
+
+  draw(t) {
+    const c = this.cv.current; if (!c || !c.clientWidth) return;
+    const d = Math.min(devicePixelRatio || 1, 2), w = c.clientWidth, h = c.clientHeight;
+    if (c.width !== Math.round(w * d)) { c.width = Math.round(w * d); c.height = Math.round(h * d); }
+    const x = c.getContext('2d'); x.setTransform(d, 0, 0, d, 0, 0);
+    const sky = x.createLinearGradient(0, 0, 0, h); sky.addColorStop(0, '#7DC7DB'); sky.addColorStop(0.55, '#bfe6ee'); sky.addColorStop(0.66, '#ffe6b8');
+    x.fillStyle = sky; x.fillRect(0, 0, w, h);
+    const sun = x.createRadialGradient(w * 0.8, h * 0.28, 4, w * 0.8, h * 0.28, h * 0.32); sun.addColorStop(0, 'rgba(255,246,223,1)'); sun.addColorStop(0.22, 'rgba(255,230,170,.95)'); sun.addColorStop(0.23, 'rgba(255,220,150,.4)'); sun.addColorStop(1, 'rgba(255,220,150,0)');
+    x.fillStyle = sun; x.fillRect(0, 0, w, h);
+    const off = (this.dist * 0.15) % w;
+    x.fillStyle = 'rgba(255,255,255,.85)';
+    for (let i = 0; i < 4; i++) { const cx = ((i * w / 3.2 - off * 0.4) % (w + 200) + w + 200) % (w + 200) - 100, cy = h * (0.12 + (i % 2) * 0.1); x.beginPath(); x.ellipse(cx, cy, 60, 16, 0, 0, 6.283); x.ellipse(cx + 30, cy - 10, 36, 18, 0, 0, 6.283); x.fill(); }
+    x.strokeStyle = 'rgba(8,47,73,.7)'; x.lineWidth = 2; x.lineCap = 'round';
+    for (let i = 0; i < 3; i++) { const bx = ((w * 0.3 + i * 40 - this.dist * 0.05 + t * 20) % (w + 100) + w + 100) % (w + 100) - 50, by = h * 0.2 + i * 12 + Math.sin(t * 1.3 + i) * 4, fl = Math.sin(t * 7 + i) * 4; x.beginPath(); x.moveTo(bx - 8, by + fl); x.quadraticCurveTo(bx - 4, by - 3, bx, by); x.quadraticCurveTo(bx + 4, by - 3, bx + 8, by + fl); x.stroke(); }
+    const layers = [['#3f97bf', 0.62, 0.6, 1], ['#1E6D93', 0.7, 0.8, 1.6]];
+    for (const [col, b, a, sp] of layers) { x.fillStyle = col; x.beginPath(); x.moveTo(0, h); for (let px = 0; px <= w; px += 8) x.lineTo(px, h * b + Math.sin((px + this.dist * sp * 0.4) / w * 6.283 * 2 + t) * h * 0.015); x.lineTo(w, h); x.fill(); }
+    const sc = h / 420, sx = w * 0.22;
+    const wv = px => this.wave(px + this.dist * 0.6, t, w, h);
+    for (const o of this.obs) {
+      const oy = wv(o.x);
+      if (o.k === 'fin') { x.fillStyle = '#495d6e'; x.beginPath(); x.moveTo(o.x - 20 * sc, oy + 4); x.quadraticCurveTo(o.x - 2 * sc, oy - 46 * sc, o.x + 16 * sc, oy - 40 * sc); x.quadraticCurveTo(o.x + 6 * sc, oy - 20 * sc, o.x + 14 * sc, oy + 4); x.fill(); }
+      else if (o.k === 'rock') { x.fillStyle = '#5f6b73'; x.beginPath(); x.ellipse(o.x, oy + 4, 26 * sc, 30 * sc, 0, Math.PI, 0); x.fill(); x.fillStyle = 'rgba(255,255,255,.25)'; x.beginPath(); x.ellipse(o.x - 8 * sc, oy - 12 * sc, 8 * sc, 5 * sc, -0.4, 0, 6.283); x.fill(); }
+      else { const bob = Math.sin(t * 3 + o.x) * 3; x.fillStyle = '#ff7a59'; x.fillRect(o.x - 12 * sc, oy - 40 * sc + bob, 24 * sc, 40 * sc); x.fillStyle = '#EEFAFB'; x.fillRect(o.x - 12 * sc, oy - 26 * sc + bob, 24 * sc, 10 * sc); }
+    }
+    x.fillStyle = '#14567a'; x.beginPath(); x.moveTo(0, h); for (let px = 0; px <= w; px += 6) x.lineTo(px, wv(px)); x.lineTo(w, h); x.fill();
+    x.strokeStyle = 'rgba(238,250,251,.85)'; x.lineWidth = 3; x.beginPath(); for (let px = 0; px <= w; px += 6) { const py = wv(px); px ? x.lineTo(px, py) : x.moveTo(px, py); } x.stroke();
+    const deep = x.createLinearGradient(0, h * 0.7, 0, h); deep.addColorStop(0, 'rgba(8,47,73,0)'); deep.addColorStop(1, 'rgba(8,47,73,.7)'); x.fillStyle = deep; x.fillRect(0, h * 0.7, w, h * 0.3);
+    for (const it of this.items) { const iy = wv(it.x) - it.hgt * sc + Math.sin(t * 3 + it.ph) * 5 * sc, r = 11 * sc; const gl = x.createRadialGradient(it.x, iy, 1, it.x, iy, r * 2.4); gl.addColorStop(0, 'rgba(255,214,120,.65)'); gl.addColorStop(1, 'rgba(255,214,120,0)'); x.fillStyle = gl; x.beginPath(); x.arc(it.x, iy, r * 2.4, 0, 6.283); x.fill(); x.fillStyle = '#ffc46b'; x.beginPath(); x.moveTo(it.x - r, iy + r * 0.6); for (let k = 0; k <= 6; k++) { const a = Math.PI + k * Math.PI / 6; x.lineTo(it.x + Math.cos(a) * r * 1.1, iy + r * 0.6 + Math.sin(a) * r * 1.4); } x.closePath(); x.fill(); x.strokeStyle = '#c98a2b'; x.lineWidth = 1.4; for (let k = 1; k < 6; k++) { const a = Math.PI + k * Math.PI / 6; x.beginPath(); x.moveTo(it.x, iy + r * 0.6); x.lineTo(it.x + Math.cos(a) * r, iy + r * 0.6 + Math.sin(a) * r * 1.3); x.stroke(); } }
+    const gy = wv(sx), slope = Math.atan2(wv(sx + 10) - wv(sx - 10), 20);
+    const crashed = this.mode === 'over';
+    x.save(); if (this.inv > 0 && this.mode === 'play' && Math.floor(t * 12) % 2) x.globalAlpha = 0.35; x.translate(sx, gy + this.y * sc); x.rotate(crashed ? 1.2 : slope * 0.6 + (this.y < 0 ? Math.max(-0.35, this.vy / 3000) : 0));
+    if (this.surfer.complete && this.surfer.naturalWidth) { const ih = 100 * sc, iw = ih * this.surfer.naturalWidth / this.surfer.naturalHeight; x.drawImage(this.surfer, -iw * 0.42, -ih * 0.9, iw, ih); }
+    else { x.fillStyle = '#ffc46b'; x.beginPath(); x.ellipse(0, -6, 40 * sc, 8 * sc, 0, 0, 6.283); x.fill(); }
+    x.restore();
+    x.fillStyle = 'rgba(255,255,255,.9)';
+    for (const p of this.spray) { x.globalAlpha = Math.max(0, p.l / 0.6); x.beginPath(); x.arc(sx - 30 * sc + p.x, gy + p.y, 3, 0, 6.283); x.fill(); }
+    x.globalAlpha = 1;
+    x.textAlign = 'center'; x.font = '800 ' + Math.round(26 * sc) + 'px "Instrument Sans", system-ui, sans-serif';
+    this.pops.forEach((p, idx) => { const k = 1 - p.l / 1.1; x.globalAlpha = Math.min(1, p.l * 2); x.lineWidth = 5; x.strokeStyle = 'rgba(8,47,73,.6)'; const py = gy + this.y * sc - 130 * sc - k * 50 * sc - (this.pops.length - 1 - idx) * 36 * sc; x.strokeText(p.t, sx + 20 * sc, py); x.fillStyle = p.col; x.fillText(p.t, sx + 20 * sc, py); });
+    x.globalAlpha = 1; x.textAlign = 'left';
+  }
+
+  renderVals() {
+    return { howTo: this.howTo, share: e => { e.stopPropagation(); this.shareScore(); }, shareBtn: this.shareBtn, livesEl: this.livesEl, cv: this.cv, scoreEl: this.scoreEl, bestEl: this.bestEl, overlay: this.overlay, ovTitle: this.ovTitle, ovSub: this.ovSub };
+  }
+}
+</script>
+</body>
+</html>
