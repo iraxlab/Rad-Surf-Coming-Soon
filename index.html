@@ -258,6 +258,7 @@ details summary span{transition:transform .25s}
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button onClick="{{ bombBoard }}" style="border:1.5px solid #EEFAFB;cursor:pointer;background:#EEFAFB;color:#082f49;font-weight:700;font-size:14px;padding:11px 18px;border-radius:999px;transition:transform .2s,background .2s;box-shadow:0 14px 28px -12px rgba(0,0,0,.4)" style-hover="transform:translateY(-2px);background:#ffc46b">🎲 Sticker Bomb (×5)</button>
         <button onClick="{{ clearBoard }}" style="border:1.5px solid rgba(238,250,251,.45);cursor:pointer;background:rgba(238,250,251,.1);color:#EEFAFB;font-weight:700;font-size:14px;padding:11px 18px;border-radius:999px;transition:background .2s" style-hover="background:rgba(238,250,251,.22)">🧼 Scrape Wax &amp; Clear</button>
+        <button onClick="{{ saveBoard }}" style="border:1.5px solid #ffc46b;cursor:pointer;background:rgba(255,196,107,.12);color:#ffc46b;font-weight:800;font-size:14px;padding:11px 18px;border-radius:999px;transition:transform .2s,background .2s" style-hover="transform:translateY(-2px);background:rgba(255,196,107,.26)">📸 Save My Board</button>
         <button onClick="{{ addStickerPack }}" style="border:0;cursor:pointer;background:#ffc46b;color:#082f49;font-weight:800;font-size:14px;padding:11px 18px;border-radius:999px;box-shadow:0 14px 28px -12px rgba(0,0,0,.45);transition:transform .2s,background .2s" style-hover="transform:translateY(-2px);background:#EEFAFB">＋ Add Selected Sticker ($5)</button>
       </div>
     </div>
@@ -486,6 +487,23 @@ details summary span{transition:transform .25s}
         <span style="font-family:'Instrument Sans',system-ui,sans-serif;font-weight:700;font-size:17px;color:#082f49;padding:0 4px">{{ g.caption }}</span>
       </div>
     </sc-for>
+  </div>
+</section>
+
+<section id="play" data-screen-label="Wipeout Game" style="position:relative;background:#0b3a58;color:#EEFAFB;padding:clamp(70px,7vw,110px) clamp(16px,5vw,80px)">
+  <div style="max-width:1760px;margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,64px);align-items:center">
+    <div data-reveal="1" style="flex:1 1 320px;display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#ffc46b">Take a break · Catch a wave</span>
+      <h2 style="margin:0;font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(40px,4.6vw,72px);line-height:.98;letter-spacing:-0.025em;text-wrap:balance">Wipeout! Can you beat the swell?</h2>
+      <p style="margin:0;font-size:19px;line-height:1.6;max-width:480px;color:#cfe6ee">Ride the wave with our Surfer Dude and see how far you can go. It speeds up the longer you last.</p>
+      <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:18px;line-height:1.45">
+        <li style="display:flex;gap:12px;align-items:baseline"><span style="flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:#ffc46b;color:#082f49;display:grid;place-items:center;font-weight:800;font-size:15px">1</span><span><strong>Tap the wave</strong> (or press Space) to jump. Tap again in the air for a double jump.</span></li>
+        <li style="display:flex;gap:12px;align-items:baseline"><span style="flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:#ffc46b;color:#082f49;display:grid;place-items:center;font-weight:800;font-size:15px">2</span><span><strong>Dodge</strong> shark fins, rocks and buoys. You have 3 lives.</span></li>
+        <li style="display:flex;gap:12px;align-items:baseline"><span style="flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:#ffc46b;color:#082f49;display:grid;place-items:center;font-weight:800;font-size:15px">3</span><span><strong>Grab gold shells</strong> for +2 points each.</span></li>
+        <li style="display:flex;gap:12px;align-items:baseline"><span style="flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:#ffc46b;color:#082f49;display:grid;place-items:center;font-weight:800;font-size:15px">4</span><span><strong>Tap “Share my score”</strong>. We make the picture and copy the caption for you. Just paste and post, and tag <a href="https://www.instagram.com/radsurfnoflo" target="_blank" rel="noopener" style="color:#ffc46b;font-weight:700">@radsurfnoflo</a>.</span></li>
+      </ol>
+    </div>
+    <div data-reveal="1" style="flex:2 1 560px;min-width:0"><dc-import name="SurfGame" hint-size="100%,460px"></dc-import></div>
   </div>
 </section>
 
@@ -1383,6 +1401,36 @@ void main(){
     ctx.restore();
   }
 
+  saveBoard() {
+    const src = this.boardCanvas.current; if (!src || !src.width) return;
+    const W = 1080, H = 1350, out = document.createElement('canvas'); out.width = W; out.height = H;
+    const x = out.getContext('2d');
+    const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#7DC7DB'); g.addColorStop(0.45, '#1E6D93'); g.addColorStop(1, '#082f49');
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    const sun = x.createRadialGradient(W * 0.78, 170, 10, W * 0.78, 170, 260); sun.addColorStop(0, 'rgba(255,232,180,.9)'); sun.addColorStop(0.3, 'rgba(255,214,150,.35)'); sun.addColorStop(1, 'rgba(255,214,150,0)');
+    x.fillStyle = sun; x.fillRect(0, 0, W, H);
+    x.fillStyle = '#082f49'; x.font = '800 46px "Instrument Sans", system-ui, sans-serif'; x.textAlign = 'left';
+    x.fillText('MY RAD SURF BOARD', 72, 128);
+    x.fillStyle = 'rgba(8,47,73,.8)'; x.font = '600 28px "Instrument Sans", system-ui, sans-serif';
+    x.fillText('Built in the Sticker Lab 🤙', 72, 176);
+    const top = 230, bot = H - 190, aw = W - 120, ah = bot - top, sc = Math.min(aw / src.width, ah / src.height);
+    const dw = src.width * sc, dh = src.height * sc;
+    x.save(); x.shadowColor = 'rgba(0,0,0,.35)'; x.shadowBlur = 40; x.shadowOffsetY = 18;
+    x.drawImage(src, (W - dw) / 2, top + (ah - dh) / 2, dw, dh); x.restore();
+    x.fillStyle = 'rgba(238,250,251,.16)'; x.fillRect(0, H - 130, W, 130);
+    x.fillStyle = '#EEFAFB'; x.font = '800 40px "Instrument Sans", system-ui, sans-serif'; x.fillText('theradsurf.com', 72, H - 52);
+    x.textAlign = 'right'; x.fillStyle = '#ffc46b'; x.font = '700 32px "Instrument Sans", system-ui, sans-serif'; x.fillText('@radsurfnoflo', W - 72, H - 54);
+    out.toBlob(async blob => {
+      if (!blob) return;
+      const file = new File([blob], 'my-rad-surf-board.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] }) && /iPhone|iPad|Android/i.test(navigator.userAgent)) {
+        try { await navigator.share({ files: [file], title: 'My Rad Surf board', text: 'Built my board in the Rad Surf Sticker Lab 🤙 theradsurf.com' }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+      }
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'my-rad-surf-board.png';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }, 'image/png');
+  }
+
   drawBoard(now) {
     const c = this.boardCanvas.current; if (!c || !c.clientWidth) return;
     const d = Math.min(devicePixelRatio || 1, 2), w = c.clientWidth, h = c.clientHeight;
@@ -1923,6 +1971,7 @@ void main(){
           if (this.isInsideBoard(nx, ny)) this.slapStickerAt(nx, ny, def.id);
         }
       },
+      saveBoard: () => this.saveBoard(),
       clearBoard: () => {
         this.slapped = [];
         this.setState({ slappedCount: 0 });
