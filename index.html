@@ -1426,14 +1426,31 @@ void main(){
     for (let k = 0; k < 4; k++) { const y0 = 1010 + k * 34; x.beginPath(); for (let px = 0; px <= W; px += 8) { const py = y0 + Math.sin(px / W * 6.283 * 2 + k) * 12; px ? x.lineTo(px, py) : x.moveTo(px, py); } x.stroke(); }
     x.textAlign = 'left'; x.fillStyle = '#082f49'; x.font = F(800, 44); x.fillText('RAD SURF', 72, 106);
     x.fillStyle = 'rgba(8,47,73,.75)'; x.font = F(700, 26); x.fillText(p.cat === 'Stickers' ? 'NEW STICKER DROP' : 'NEW DROP · ' + p.cat.toUpperCase(), 72, 146);
-    const cw = 780, ch = 720, cx = (W - cw) / 2, cy = 200;
-    x.save(); x.translate(W / 2, cy + ch / 2); x.rotate(-0.035); x.shadowColor = 'rgba(8,47,73,.45)'; x.shadowBlur = 50; x.shadowOffsetY = 24;
-    x.fillStyle = '#ffffff'; x.beginPath(); x.roundRect(-cw / 2, -ch / 2, cw, ch, 40); x.fill(); x.shadowColor = 'transparent';
-    x.fillStyle = p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff'; x.beginPath(); x.roundRect(-cw / 2 + 20, -ch / 2 + 20, cw - 40, ch - 40, 28); x.fill();
-    x.save(); x.beginPath(); x.roundRect(-cw / 2 + 20, -ch / 2 + 20, cw - 40, ch - 40, 28); x.clip();
-    const aw = cw - 40, ah = ch - 40, fit = p.cat === 'Stickers' ? Math.max(aw / img.width, ah / img.height) : Math.min((aw - 40) / img.width, (ah - 40) / img.height);
-    x.drawImage(img, -img.width * fit / 2, -img.height * fit / 2, img.width * fit, img.height * fit); x.restore(); x.restore();
-    x.save(); x.translate(W - 190, cy + 40); x.rotate(0.18); x.fillStyle = '#ffc46b'; x.shadowColor = 'rgba(8,47,73,.4)'; x.shadowBlur = 20; x.beginPath(); x.arc(0, 0, 105, 0, 6.283); x.fill(); x.shadowColor = 'transparent';
+    const cw = 780, ch = 720, cy = 200;
+    const card = (im, cxm, cym, w, h, rot, label) => {
+      x.save(); x.translate(cxm, cym); x.rotate(rot); x.shadowColor = 'rgba(8,47,73,.45)'; x.shadowBlur = 46; x.shadowOffsetY = 22;
+      x.fillStyle = '#ffffff'; x.beginPath(); x.roundRect(-w / 2, -h / 2, w, h, 36); x.fill(); x.shadowColor = 'transparent';
+      x.fillStyle = p.cat === 'Stickers' ? '#F2E0BB' : '#ffffff'; x.beginPath(); x.roundRect(-w / 2 + 18, -h / 2 + 18, w - 36, h - 36, 26); x.fill();
+      x.save(); x.beginPath(); x.roundRect(-w / 2 + 18, -h / 2 + 18, w - 36, h - 36, 26); x.clip();
+      const aw = w - 36, ah = h - 36, fit = p.cat === 'Stickers' ? Math.max(aw / im.width, ah / im.height) : Math.min((aw - 30) / im.width, (ah - 30) / im.height);
+      x.drawImage(im, -im.width * fit / 2, -im.height * fit / 2, im.width * fit, im.height * fit); x.restore();
+      if (label) { x.font = F(800, 26); const lw = x.measureText(label).width + 36; x.fillStyle = '#082f49'; x.beginPath(); x.roundRect(-lw / 2, h / 2 - 66, lw, 46, 23); x.fill(); x.fillStyle = '#EEFAFB'; x.textAlign = 'center'; x.fillText(label, 0, h / 2 - 34); }
+      x.restore();
+    };
+    let img2 = null;
+    const other = p.src2 ? (src === p.src2 ? p.src : p.src2) : null;
+    if (other) { img2 = new Image(); img2.src = other; try { await img2.decode(); } catch (e) { img2 = null; } }
+    if (img2) {
+      const l1 = (src === p.src2 ? p.v2 : p.v1) || 'FRONT', l2 = (src === p.src2 ? p.v1 : p.v2) || 'BACK';
+      const fr = String(l1).toLowerCase().includes('front'), first = fr ? img : img2, second = fr ? img2 : img, n1 = fr ? l1 : l2, n2 = fr ? l2 : l1;
+      card(first, 292, cy + ch / 2 + 20, 484, 650, -0.03, String(n1).toUpperCase());
+      card(second, W - 292, cy + ch / 2 + 20, 484, 650, 0.03, String(n2).toUpperCase());
+      this._two = true;
+    } else {
+      card(img, W / 2, cy + ch / 2, cw, ch, -0.035, '');
+      this._two = false;
+    }
+    x.save(); if (this._two) { x.translate(W / 2, cy - 6); x.rotate(0.08); x.scale(0.82, 0.82); } else { x.translate(W - 190, cy + 40); x.rotate(0.18); } x.fillStyle = '#ffc46b'; x.shadowColor = 'rgba(8,47,73,.4)'; x.shadowBlur = 20; x.beginPath(); x.arc(0, 0, 105, 0, 6.283); x.fill(); x.shadowColor = 'transparent';
     x.fillStyle = '#082f49'; x.textAlign = 'center'; x.font = F(800, 74); x.fillText('$' + p.price, 0, 26); x.restore();
     const perk = p.cat === 'Stickers' ? 'WATERPROOF · CLEAR DIE-CUT' : '+ FREE STICKER INCLUDED';
     x.font = F(800, 30); const pw = x.measureText(perk).width + 56; x.save(); x.translate(72 + pw / 2, cy + ch + 4); x.rotate(-0.03); x.fillStyle = '#EEFAFB'; x.beginPath(); x.roundRect(-pw / 2, -32, pw, 64, 32); x.fill(); x.fillStyle = p.cat === 'Stickers' ? '#1E6D93' : '#e8505b'; x.textAlign = 'center'; x.fillText(perk, 0, 11); x.restore();
