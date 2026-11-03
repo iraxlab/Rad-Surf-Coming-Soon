@@ -7,7 +7,13 @@
 </head>
 <body>
 <x-dc>
-<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700;800&amp;display=swap"></helmet>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700;800&amp;display=swap"><style>
+button,a{-webkit-tap-highlight-color:transparent}
+button:not(:disabled),a[style*="border-radius:999px"],a[style*="border-radius: 999px"]{transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .18s,background .2s,color .2s}
+button:not(:disabled):active,a[style*="border-radius:999px"]:active,a[style*="border-radius: 999px"]:active{transform:scale(.92) translateY(1px) !important;box-shadow:0 4px 10px -6px rgba(8,47,73,.6) !important;transition-duration:.07s !important}
+@media (prefers-reduced-motion:reduce){button:active,a:active{transform:none !important}}
+</style>
+</helmet>
 <div style="font-family:'Instrument Sans',system-ui,sans-serif;color:#EEFAFB;position:relative;width:100%;aspect-ratio:16/8;min-height:300px;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.7);border:1.5px solid rgba(125,199,219,.35);touch-action:manipulation;cursor:pointer">
     <canvas ref="{{ cv }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
     <div style="position:absolute;top:16px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;font-weight:800;font-size:clamp(16px,1.6vw,20px);color:#082f49">

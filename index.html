@@ -48,6 +48,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
 <script src="./image-slot.js"></script>
 <style>
+button,a{-webkit-tap-highlight-color:transparent}
+button:not(:disabled),a[style*="border-radius:999px"],a[style*="border-radius: 999px"]{transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .18s,background .2s,color .2s}
+button:not(:disabled):active,a[style*="border-radius:999px"]:active,a[style*="border-radius: 999px"]:active{transform:scale(.92) translateY(1px) !important;box-shadow:0 4px 10px -6px rgba(8,47,73,.6) !important;transition-duration:.07s !important}
+@media (prefers-reduced-motion:reduce){button:active,a:active{transform:none !important}}
+
 html{scroll-behavior:smooth}
 body{margin:0;background:#041f33;-webkit-font-smoothing:antialiased}
 section[id]{scroll-margin-top:88px}
@@ -395,7 +400,7 @@ details summary span{transition:transform .25s}
           </div>
           <div style="display:flex;flex-direction:column;gap:12px;padding:4px 8px 0;flex:1">
             <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;row-gap:6px;align-items:baseline">
-              <h3 style="margin:0;font-size:17px;font-weight:700;line-height:1.25;color:#082f49;text-wrap:balance">{{ p.name }}</h3>
+              <h3 style="margin:0;font-size:17px;font-weight:700;line-height:1.25;min-height:2.5em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#082f49;text-wrap:balance">{{ p.name }}</h3>
               <span style="font-family:'Instrument Sans',system-ui,sans-serif;font-weight:800;font-size:19px;line-height:1.25;color:#1E6D93">{{ p.priceLabel }}</span>
               <sc-if value="{{ p.hasNote }}" hint-placeholder-val="{{ true }}">
                 <span style="grid-column:1 / -1;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4a7d97">{{ p.note }}</span>
@@ -837,6 +842,17 @@ void main(){
 }`;
 
   componentDidMount() {
+    if (!document.getElementById('rs-top-btn')) {
+      const b = document.createElement('button'); b.id = 'rs-top-btn'; b.setAttribute('aria-label', 'Back to top');
+      b.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+      b.style.cssText = 'position:fixed;right:clamp(14px,2.5vw,28px);bottom:clamp(14px,2.5vw,28px);z-index:9000;width:56px;height:56px;border-radius:50%;border:2px solid #EEFAFB;background:#ffc46b;color:#082f49;display:grid;place-items:center;cursor:pointer;box-shadow:0 14px 30px -10px rgba(8,47,73,.7);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s,transform .3s';
+      b.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+      b.onmouseenter = () => { b.style.transform = 'translateY(-3px)'; }; b.onmouseleave = () => { b.style.transform = 'translateY(0)'; };
+      document.body.appendChild(b);
+      const tick = () => { const on = window.scrollY > window.innerHeight * 0.8; b.style.opacity = on ? '1' : '0'; b.style.pointerEvents = on ? 'auto' : 'none'; if (!on) b.style.transform = 'translateY(16px)'; else if (b.style.transform === 'translateY(16px)') b.style.transform = 'translateY(0)'; };
+      window.addEventListener('scroll', tick, { passive: true }); tick();
+    }
+
     this.t0 = performance.now(); this.lastY = scrollY; this.vel = 0; this.q = 1; this.ft = 16; this.lastNow = 0;
     this.mouse = { x: 0, y: 0, sx: 0, sy: 0 }; this.mq = { a: 0, b: 0 };
     this.foam = Array.from({ length: 180 }, () => ({ x: Math.random(), o: Math.random(), r: 0.6 + Math.random() * 1.8 }));
@@ -1443,8 +1459,8 @@ void main(){
     if (img2) {
       const l1 = (src === p.src2 ? p.v2 : p.v1) || 'FRONT', l2 = (src === p.src2 ? p.v1 : p.v2) || 'BACK';
       const fr = String(l1).toLowerCase().includes('front'), first = fr ? img : img2, second = fr ? img2 : img, n1 = fr ? l1 : l2, n2 = fr ? l2 : l1;
-      card(first, 292, cy + ch / 2 + 20, 484, 650, -0.03, String(n1).toUpperCase());
-      card(second, W - 292, cy + ch / 2 + 20, 484, 650, 0.03, String(n2).toUpperCase());
+      card(first, 292, 530, 480, 580, -0.03, String(n1).toUpperCase());
+      card(second, W - 292, 530, 480, 580, 0.03, String(n2).toUpperCase());
       this._two = true;
     } else {
       card(img, W / 2, cy + ch / 2, cw, ch, -0.035, '');
@@ -1452,19 +1468,27 @@ void main(){
     }
     x.save(); if (this._two) { x.translate(W / 2, cy - 6); x.rotate(0.08); x.scale(0.82, 0.82); } else { x.translate(W - 190, cy + 40); x.rotate(0.18); } x.fillStyle = '#ffc46b'; x.shadowColor = 'rgba(8,47,73,.4)'; x.shadowBlur = 20; x.beginPath(); x.arc(0, 0, 105, 0, 6.283); x.fill(); x.shadowColor = 'transparent';
     x.fillStyle = '#082f49'; x.textAlign = 'center'; x.font = F(800, 74); x.fillText('$' + p.price, 0, 26); x.restore();
-    const perk = p.cat === 'Stickers' ? 'WATERPROOF · CLEAR DIE-CUT' : '+ FREE STICKER INCLUDED';
-    x.font = F(800, 30); const pw = x.measureText(perk).width + 56; x.save(); x.translate(72 + pw / 2, cy + ch + 4); x.rotate(-0.03); x.fillStyle = '#EEFAFB'; x.beginPath(); x.roundRect(-pw / 2, -32, pw, 64, 32); x.fill(); x.fillStyle = p.cat === 'Stickers' ? '#1E6D93' : '#e8505b'; x.textAlign = 'center'; x.fillText(perk, 0, 11); x.restore();
+    const perk = p.cat === 'Stickers' ? 'WATERPROOF · CLEAR DIE-CUT' : '+ FREE RANDOM STICKER';
+    const perkY = this._two ? 892 : cy + ch + 4; x.font = F(800, 30); const pw = x.measureText(perk).width + 56; x.save(); x.translate(72 + pw / 2, perkY); x.rotate(-0.03); x.fillStyle = '#EEFAFB'; x.beginPath(); x.roundRect(-pw / 2, -32, pw, 64, 32); x.fill(); x.fillStyle = p.cat === 'Stickers' ? '#1E6D93' : '#e8505b'; x.textAlign = 'center'; x.fillText(perk, 0, 11); x.restore();
+    if (p.cat !== 'Stickers') {
+      const opts = ['dude-dark-hair', 'dude-blonde', 'girl-brunette', 'girl-blonde'], st = new Image();
+      st.src = './assets/stickers/cut-' + opts[(Math.random() * opts.length) | 0] + '.png';
+      try { await st.decode(); const sh = 124, sw = sh * st.naturalWidth / st.naturalHeight;
+        x.save(); x.translate(72 + pw + 26 + sw / 2, perkY - 4); x.rotate(0.12); x.shadowColor = 'rgba(8,47,73,.45)'; x.shadowBlur = 22; x.shadowOffsetY = 10; x.drawImage(st, -sw / 2, -sh / 2, sw, sh); x.restore();
+        x.save(); x.translate(72 + pw + 26 + sw + 36, perkY - 8); x.rotate(0.12); x.fillStyle = '#ffc46b'; x.beginPath(); x.arc(0, 0, 30, 0, 6.283); x.fill(); x.fillStyle = '#082f49'; x.font = F(800, 36); x.textAlign = 'center'; x.fillText('?', 0, 14); x.restore();
+      } catch (e) {}
+    }
     x.textAlign = 'left'; x.fillStyle = '#EEFAFB'; x.font = F(800, 58);
     const words = p.name.split(' '), lines = []; let line = '';
     for (const w0 of words) { const t = line ? line + ' ' + w0 : w0; if (x.measureText(t).width > W - 144) { lines.push(line); line = w0; } else line = t; } lines.push(line);
-    lines.slice(0, 2).forEach((l, i) => x.fillText(l, 72, cy + ch + 110 + i * 64));
+    lines.slice(0, 2).forEach((l, i) => x.fillText(l, 72, perkY + 112 + i * 64));
     x.fillStyle = 'rgba(238,250,251,.14)'; x.fillRect(0, H - 112, W, 112);
     x.fillStyle = '#EEFAFB'; x.font = F(800, 38); x.fillText('theradsurf.com', 72, H - 44);
     x.textAlign = 'right'; x.fillStyle = '#ffc46b'; x.font = F(700, 32); x.fillText('@radsurfnoflo', W - 72, H - 46);
     const tags = ' 🤙 @radsurfnoflo #RadSurf #StayRad #SurfLife';
     const caps = p.cat === 'Stickers'
       ? ['Slapping this on my board ASAP 🏄‍♂️ ' + p.name + ' from Rad Surf, only $' + p.price + '. Grab yours at theradsurf.com' + tags, 'Found my sticker twin 😎 ' + p.name + ', waterproof and made for boards, cars & coolers. theradsurf.com' + tags]
-      : ['Obsessed with this ' + p.name + ' from Rad Surf 🌊 $' + p.price + ' and it comes with a FREE sticker! theradsurf.com' + tags, 'Adding this to my surf wardrobe 🏄‍♀️ ' + p.name + ' · free sticker with every hat or tee. Shop at theradsurf.com' + tags];
+      : ['Obsessed with this ' + p.name + ' from Rad Surf 🌊 $' + p.price + ' and it comes with a FREE random sticker! theradsurf.com' + tags, 'Adding this to my surf wardrobe 🏄‍♀️ ' + p.name + ' · free random sticker with every hat or tee. Shop at theradsurf.com' + tags];
     this.rsShare(c, 'rad-surf-' + p.id + '.png', p.name + ' · Rad Surf', caps[(Math.random() * caps.length) | 0]);
   }
   saveBoard() {
@@ -1599,7 +1623,7 @@ void main(){
 
   // --- UPGRADED SAND CANVAS (#contact) ---
   mkGL(canvas, frag) {
-    const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true }); if (!gl) return null;
+    const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true }); if (!gl) { this.heroTries = 9; return null; }
     try { const ext = gl.getExtension('WEBGL_debug_renderer_info'); const rn = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : ''; if (/SwiftShader|llvmpipe|Software|softpipe/i.test(rn)) return null; } catch (e) {}
     const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(o)); return null; } return o; };
     const vs = sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'), fs = sh(gl.FRAGMENT_SHADER, this.COMMON + frag);
@@ -1608,11 +1632,43 @@ void main(){
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     const loc = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     const u = n => gl.getUniformLocation(pr, n);
-    return { gl, canvas, uR: u('uR'), uT: u('uT'), uP: u('uP'), uM: u('uM') };
+    const obj = { gl, canvas, uR: u('uR'), uT: u('uT'), uP: u('uP'), uM: u('uM') };
+    if (!canvas._rsLost) { canvas._rsLost = true; canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); if (this.hero && this.hero.canvas === canvas) this.hero = null; if (this.deep && this.deep.canvas === canvas) this.deep = null; }); }
+    return obj;
+  }
+  drawSea2D(t, p) {
+    const src = this.heroCanvas.current; if (!src) return;
+    if (!this.sea2d) { const c = document.createElement('canvas'); c.style.cssText = src.style.cssText; c.setAttribute('aria-hidden', 'true'); src.parentNode.insertBefore(c, src); src.style.display = 'none'; this.sea2d = c; }
+    const c = this.sea2d, w = c.clientWidth, h = c.clientHeight; if (!w || !h) return;
+    const d = Math.min(devicePixelRatio || 1, 1.5); if (c.width !== Math.round(w * d)) { c.width = Math.round(w * d); c.height = Math.round(h * d); }
+    const x = c.getContext('2d'); x.setTransform(d, 0, 0, d, 0, 0);
+    const k = Math.min(1, Math.max(0, p)), hz = h * 0.5;
+    const mix = (a, b) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
+    const top = mix([110, 196, 222], [38, 70, 120]), mid = mix([190, 230, 240], [240, 150, 110]), hzc = mix([255, 236, 200], [255, 190, 130]);
+    const sky = x.createLinearGradient(0, 0, 0, hz); sky.addColorStop(0, 'rgb(' + top + ')'); sky.addColorStop(0.7, 'rgb(' + mid + ')'); sky.addColorStop(1, 'rgb(' + hzc + ')');
+    x.fillStyle = sky; x.fillRect(0, 0, w, hz + 2);
+    const sx = w * 0.5, sy = hz * (0.42 + k * 0.5), sr = Math.min(w, h) * 0.07;
+    const glow = x.createRadialGradient(sx, sy, sr * 0.6, sx, sy, sr * 6); glow.addColorStop(0, 'rgba(255,236,190,.7)'); glow.addColorStop(1, 'rgba(255,236,190,0)'); x.fillStyle = glow; x.fillRect(0, 0, w, hz);
+    x.fillStyle = '#fff3d6'; x.beginPath(); x.arc(sx, sy, sr, 0, 6.283); x.fill();
+    const sea = x.createLinearGradient(0, hz, 0, h); sea.addColorStop(0, 'rgb(' + mix([62, 150, 190], [60, 80, 120]) + ')'); sea.addColorStop(0.35, '#1E6D93'); sea.addColorStop(1, '#082f49');
+    x.fillStyle = sea; x.fillRect(0, hz, w, h - hz);
+    x.save(); x.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 26; i++) { const yy = hz + Math.pow(i / 26, 1.6) * (h - hz) * 0.9 + 2, ww = sr * (0.6 + i * 0.35) * (1 + Math.sin(t * 2 + i) * 0.25); x.fillStyle = 'rgba(255,225,170,' + (0.32 - i * 0.011).toFixed(3) + ')'; x.fillRect(sx - ww / 2 + Math.sin(t * 1.3 + i * 1.7) * 6, yy, ww, 1.5 + i * 0.12); }
+    x.restore();
+    for (let L = 0; L < 7; L++) {
+      const f = L / 6, yb = hz + 6 + Math.pow(f, 1.7) * (h - hz) * 0.95, amp = 2 + f * 16, len = 120 + f * 260, sp = 0.4 + f * 0.9;
+      x.beginPath(); x.moveTo(0, h);
+      for (let px = 0; px <= w + 10; px += 10) x.lineTo(px, yb + Math.sin(px / len + t * sp + L * 1.3) * amp + Math.sin(px / (len * 0.43) - t * sp * 1.4 + L) * amp * 0.35);
+      x.lineTo(w, h); x.closePath();
+      x.fillStyle = 'rgba(8,47,73,' + (0.05 + f * 0.09).toFixed(3) + ')'; x.fill();
+      x.beginPath();
+      for (let px = 0; px <= w + 10; px += 10) { const py = yb + Math.sin(px / len + t * sp + L * 1.3) * amp + Math.sin(px / (len * 0.43) - t * sp * 1.4 + L) * amp * 0.35; px ? x.lineTo(px, py) : x.moveTo(px, py); }
+      x.strokeStyle = 'rgba(238,250,251,' + (0.12 + f * 0.25).toFixed(3) + ')'; x.lineWidth = 1 + f * 1.6; x.stroke();
+    }
   }
   drawGL(o, maxPx, t, p) {
     const c = o.canvas, w = c.clientWidth, h = c.clientHeight; if (!w || !h) return;
-    let d = Math.min(devicePixelRatio || 1, 2) * this.q; if (w * h * d * d > maxPx) d = Math.sqrt(maxPx / (w * h));
+    let d = Math.min(devicePixelRatio || 1, 2) * (o === this.hero ? Math.max(this.q, 0.6) : this.q); if (w * h * d * d > maxPx) d = Math.sqrt(maxPx / (w * h));
     const W = Math.round(w * d), H = Math.round(h * d), gl = o.gl;
     if (c.width !== W || c.height !== H) { c.width = W; c.height = H; gl.viewport(0, 0, W, H); }
     gl.uniform2f(o.uR, W, H); gl.uniform1f(o.uT, t); if (o.uP) gl.uniform1f(o.uP, p); if (o.uM) gl.uniform2f(o.uM, this.mouse.sx, this.mouse.sy);
@@ -1850,8 +1906,9 @@ void main(){
     this.ft += (Math.min(dt, 100) - this.ft) * 0.05;
     if (this.ft > 26 && this.q > 0.3 && now - (this.qT || 0) > 1200) { this.q *= 0.8; this.qT = now; }
     this.fc = (this.fc || 0) + 1;
-    const judge = (o, key) => { if (!o || this.fc < 20 || dt > 1000) return; o.slow = dt > 140 ? (o.slow || 0) + 1 : 0; if (o.slow > 6) { this[key] = null; this[key + 'Fail'] = true; } };
+    const judge = (o, key) => { if (!o || this.fc < 20 || dt > 1000) return; if (document.hidden) { o.slow = 0; return; } o.slow = dt > 220 ? (o.slow || 0) + 1 : 0; if (o.slow > 30 && key !== 'hero') { this[key] = null; this[key + 'Fail'] = true; } if (o.slow > 8 && this.q > 0.3) { this.q *= 0.8; o.slow = 0; } };
     judge(this.hero, 'hero'); judge(this.deep, 'deep');
+    if (!this._visFix) { this._visFix = true; document.addEventListener('visibilitychange', () => { this.lastFrame = performance.now(); }); }
     const heavy = dt < 50 || this.fc % 3 === 0, half = now - (this.lastHalf || 0) > 32; if (half) this.lastHalf = now;
     const t = (now - this.t0) / 1000, m = this.mouse;
     m.sx += (m.x - m.sx) * 0.04; m.sy += (m.y - m.sy) * 0.04;
@@ -1860,7 +1917,9 @@ void main(){
     if (hw) {
       const r = hw.getBoundingClientRect(), p = this.C(-r.top / Math.max(1, r.height - innerHeight));
       if (r.bottom > 0) {
-        if (!this.hero && this.heroCanvas.current && !this.heroFail) { this.hero = this.mkGL(this.heroCanvas.current, this.HERO); if (!this.hero) this.heroFail = true; }
+        if (!this.hero && this.heroCanvas.current && !this.heroFail) { this.hero = this.mkGL(this.heroCanvas.current, this.HERO); if (!this.hero) { this.heroTries = (this.heroTries || 0) + 1; if (this.heroTries > 2) this.heroFail = true; } }
+        if (this.hero && this.hero.gl.isContextLost && this.hero.gl.isContextLost()) this.hero = null;
+        if (this.heroFail && half) this.drawSea2D(t, p);
         const mode = this.props.sceneMode || 'Scroll sunset';
         if (this.hero && heavy) this.drawGL(this.hero, 2.2e6, t, mode === 'Golden hour' ? 0.1 : mode === 'Dusk' ? 0.88 : p * 0.95);
         if (!this.letters || !this.letters.length || !this.letters[0].isConnected) this.letters = this.title.current ? this.title.current.querySelectorAll('[data-l]') : [];

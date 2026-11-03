@@ -13,7 +13,12 @@
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
-<style>@media (max-width:420px){.nav-social{display:none!important}}
+<style>
+button,a{-webkit-tap-highlight-color:transparent}
+button:not(:disabled),a[style*="border-radius:999px"],a[style*="border-radius: 999px"]{transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .18s,background .2s,color .2s}
+button:not(:disabled):active,a[style*="border-radius:999px"]:active,a[style*="border-radius: 999px"]:active{transform:scale(.92) translateY(1px) !important;box-shadow:0 4px 10px -6px rgba(8,47,73,.6) !important;transition-duration:.07s !important}
+@media (prefers-reduced-motion:reduce){button:active,a:active{transform:none !important}}
+@media (max-width:420px){.nav-social{display:none!important}}
 @media (max-width:640px){
 [data-nav-bar]{gap:8px!important;padding:6px 6px 6px 8px!important}
 [data-nav-logo]{height:50px!important;padding:4px 14px!important}
